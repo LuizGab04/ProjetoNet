@@ -3,10 +3,10 @@ var app = builder.Build();
 
 app.UseDefaultFiles(new DefaultFilesOptions
 {
-    DefaultFileNames = new List<string> { "kanban.html" }
+    DefaultFileNames = new List<string> { "login.html" }
 });
 
 
 app.UseStaticFiles();
 
-app.Run();
+app.Run(); 

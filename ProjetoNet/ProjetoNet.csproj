@@ -19,6 +19,8 @@
     <Folder Include="Controllers\" />
     <Folder Include="Model\" />
     <Folder Include="Repositories\Interfaces\" />
+    <Folder Include="wwwroot\Modelos\" />
+    <Folder Include="wwwroot\Scripts\" />
   </ItemGroup>
 
 </Project>
