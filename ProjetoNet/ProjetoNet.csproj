@@ -12,6 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\assets\css\theme-rtl - Cópia.css" />
+    <Content Remove="wwwroot\assets\css\theme-rtl - Cópia.css.map" />
+    <Content Remove="wwwroot\assets\css\theme-rtl - Cópia.min.css" />
+    <Content Remove="wwwroot\assets\css\theme-rtl - Cópia.min.css.map" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ContainerPort Include="8081" />
   </ItemGroup>
 

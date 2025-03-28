@@ -1,20 +1,30 @@
-﻿btCadastrar.onclick = () => {
+﻿const link = document.createElement("link")
+link.rel = "stylesheet"
+link.href = "assets/css/theme-rtl.css" // Caminho do CSS
+document.head.appendChild(link);
+
+btCadastrar.onclick = () => {
+    document.getElementById("form-botoes").classList.add("nenhum")
     document.getElementById("form-container").innerHTML = `
         <form>
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <label for="inputNome" class="form-label">Nome Completo</label>
+                <input type="text" class="form-control" id="inputNome">
+            </div>
+             <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Endereço de e-mail</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
+             </div>
+             <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Senha</label>
                 <input type="password" class="form-control" id="exampleInputPassword1">
-            </div>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+             </div>
         </form>
+          <div>
+            <ul id="form-botoes" style=" list-style: none; display: flex; align-content: center;">
+                <li class="p-3"><button id="btLogin" class="btn btn-primary">Login</button></li>
+                <li class="p-3"><button id="btCadastrar" class="btn btn-secondary">Cadastro</button></li>
+            </ul>
+          </div>
     `;
 };
