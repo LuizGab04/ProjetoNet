@@ -1,10 +1,12 @@
-﻿const link = document.createElement("link")
-link.rel = "stylesheet"
-link.href = "assets/css/theme-rtl.css" // Caminho do CSS
-document.head.appendChild(link);
+﻿function addStyle() {
+    const sheet = new CSSStyleSheet();
+    sheet.insertRule(`#botoes-login { display: none; }`, 0); 
+    document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet]; 
+}
 
 btCadastrar.onclick = () => {
-    document.getElementById("form-botoes").classList.add("nenhum")
+    document.querySelector('h1').innerHTML = "Realize o seu Cadastro"
+    document.getElementById("botoes-login").classList.add(addStyle())
     document.getElementById("form-container").innerHTML = `
         <form>
             <div class="mb-3">
@@ -21,10 +23,25 @@ btCadastrar.onclick = () => {
              </div>
         </form>
           <div>
-            <ul id="form-botoes" style=" list-style: none; display: flex; align-content: center;">
-                <li class="p-3"><button id="btLogin" class="btn btn-primary">Login</button></li>
-                <li class="p-3"><button id="btCadastrar" class="btn btn-secondary">Cadastro</button></li>
+            <ul id="form-botoes" style=" list-style: none; display: flex; justify-content: center;">
+                <li class="p-3"><button id="btVoltar" class="btn btn-primary">voltar</button></li>
+                <li class="p-3"><button type="submit" id="btEnviarCadastro" class="btn btn-secondary">Cadastrar</button></li>
             </ul>
           </div>
     `;
+
+    document.getElementById("btVoltar").onclick = () => {
+        window.location.href = "login.html"
+    }
+    document.getElementById("btEnviarCadastro").onclick = () => {
+    }
+
+    
 };
+
+
+
+btLogin.onclick = () => {
+    console.log("ooi")
+}
+
