@@ -8,7 +8,7 @@ public class DbConexaoFactory
 
     public DbConexaoFactory(IConfiguration configuration)
     {
-        _connectionString = configuration.GetConnectionString("DefaultConnection");
+        _connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException(nameof(configuration), "Connection string cannot be null");
     }
 
     public IDbConnection CreateConnection()
