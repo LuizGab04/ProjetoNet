@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿function addStyle() {
     const sheet = new CSSStyleSheet();
     sheet.insertRule(`#botoes-login { display: none; }`, 0); 
@@ -42,10 +43,9 @@ btCadastrar.onclick = () => {
 
     
 };
+=======
+﻿
+>>>>>>> 5088b56cdfba3625c37515f233c4009dd9580fde
 
 
-
-btLogin.onclick = () => {
-    console.log("ooi")
-}
 

@@ -8,6 +8,15 @@ builder.Services.AddSingleton<DbConexaoFactory>();
 builder.Services.AddScoped<IUsuario, UsuarioRepository>();
 // Configuração de serviços
 builder.Services.AddControllersWithViews();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
@@ -21,7 +30,8 @@ app.Use(async (context, next) =>
     await next();
 });
 
-var defaltFilesOption =
+
+app.UseCors("CorsPolicy");
 // Configuração dos middlewares antes de rodar o app
 app.UseDefaultFiles(new DefaultFilesOptions());
 app.UseStaticFiles();
