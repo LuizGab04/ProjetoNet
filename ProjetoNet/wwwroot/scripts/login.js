@@ -21,6 +21,10 @@ btCadastrar.onclick = () => {
                 <label for="exampleInputPassword1" class="form-label">Senha</label>
                 <input type="password" class="form-control" id="exampleInputPassword1">
              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Confirme sua ssenha</label>
+                <input type="password" class="form-control" id="exampleInputPassword1">
+             </div>
         </form>
           <div>
             <ul id="form-botoes" style=" list-style: none; display: flex; justify-content: center;">

@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using System.Threading.Tasks;
-using Dapper;
-using Mysqlx.Crud;
+﻿using Dapper;
 using ProjetoNet.Model;
 using ProjetoNet.Repositories.Interfaces;
 
