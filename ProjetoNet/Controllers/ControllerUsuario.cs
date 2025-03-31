@@ -15,7 +15,7 @@ namespace ProjetoNet.Controllers
         public ControllerUsuario(IUsuario UsuarioRepository) => _UsuarioRepository = UsuarioRepository;
         
         [HttpPost]
-        public async Task<ActionResult<Usuario>> Create(Usuario usuario)
+        public async Task<ActionResult<Usuario>> CriarUsuario([FromBody] Usuario usuario)
         {
             try
             {

@@ -21,6 +21,10 @@ app.Use(async (context, next) =>
     await next();
 });
 
+app.UseCors(builder =>
+    builder.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader());
 var defaltFilesOption =
 // Configuração dos middlewares antes de rodar o app
 app.UseDefaultFiles(new DefaultFilesOptions());
