@@ -14,19 +14,18 @@ namespace ProjetoNet.Repositories
 
         public UsuarioRepository(DbConexaoFactory dbConexaoFactory) => _dbConexaoFactory = dbConexaoFactory;
 
-
         public async Task<IEnumerable<Usuario>> ListarUsuarios()
         {
             using var conexao = _dbConexaoFactory.CreateConnection();
             return await conexao.QueryAsync<Usuario>("SELECT * FROM Usuario");
         }
            
-        public async Task<Usuario> GetUsuarioById(int id)
+        public async Task<Usuario?> GetUsuarioById(int id)
         {
             using var conexao = _dbConexaoFactory.CreateConnection();
-#pragma warning disable CS8603 // Possível retorno de referência nula.
-            return await conexao.QueryFirstOrDefaultAsync<Usuario>("SELECT * FROM Usuario WHERE id_usuario = @id", new { id_usuario = id });
-#pragma warning restore CS8603 // Possível retorno de referência nula.
+
+            return await conexao.QueryFirstOrDefaultAsync<Usuario>($"SELECT * FROM Usuario WHERE id_usuario = {id}");
+
         }
 
         public async Task<int> AdicionarUsuario(Usuario usuario)
