@@ -6,7 +6,10 @@ namespace ProjetoNet.Repositories
 {
     public class UsuarioRepository : IUsuario
     {
+
         private readonly DbConexaoFactory _dbConexaoFactory;
+
+       
 
         public UsuarioRepository(DbConexaoFactory dbConexaoFactory) => _dbConexaoFactory = dbConexaoFactory;
 
@@ -15,7 +18,7 @@ namespace ProjetoNet.Repositories
             using var conexao = _dbConexaoFactory.CreateConnection();
             return await conexao.QueryAsync<Usuario>("SELECT * FROM Usuario");
         }
-           
+
         public async Task<Usuario?> GetUsuarioById(int id)
         {
             using var conexao = _dbConexaoFactory.CreateConnection();
@@ -26,9 +29,18 @@ namespace ProjetoNet.Repositories
 
         public async Task<int> AdicionarUsuario(Usuario usuario)
         {
-            using var conexao = _dbConexaoFactory.CreateConnection();
-            string sql = "INSERT INTO Usuarios(Nome, Email) VALUES(@Nome, @Email); SELECT LAST_INSERT_ID(); ";
-            return await conexao.ExecuteScalarAsync<int>(sql, usuario);
+            try
+            {
+                Console.WriteLine("Inserindo usuário no banco...");
+                using var conexao = _dbConexaoFactory.CreateConnection();
+                string sql = $"INSERT INTO Usuario(nome_usuario, email_usuario, senha_usuario) VALUES (@nome_usuario, @email_usuario, @senha_usuario); ";
+                return await conexao.ExecuteScalarAsync<int>(sql, usuario);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao inserir no banco: {ex.Message}");
+                throw;  // Re-lance a exceção para ser capturada no controlador
+            }
         }
 
         Task<IEnumerable<Usuario>> IUsuario.ListarUsuarios()

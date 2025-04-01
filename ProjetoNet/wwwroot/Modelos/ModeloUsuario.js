@@ -1,9 +1,11 @@
-﻿export class Usuario {
-    id_usuario
+﻿
+export class Usuario {
     nome_usuario
     email_usuario
+    senha_usuario
 
-    static appUrl = "http://localhost:5176/api/usuarios"
+    
+    static appUrl = "http://localhost:5176/api/controller"
 
     static async listarUsuarios() {
         let response = await fetch(this.appUrl);
@@ -14,7 +16,6 @@
         let response = await fetch(`${this.appUrl}/${id}`);
         return response.json();
     }
-
     static async cadastrarUsuario(usuario) {
         try {
             let response = await fetch(this.appUrl, {
@@ -23,14 +24,9 @@
                 body: JSON.stringify(usuario),
             });
 
-            if (!response.ok) {
-                throw new Error(`Erro na requisição: ${response.status}`);
-            }
-
             let data = await response.json().catch(() => null);
             return data || { mensagem: "Nenhum conteúdo retornado" };
         } catch (error) {
-            console.error("Erro ao ir para o back usuário:", error);
             alert("Erro ao cadastrar usuário!");
         }
     }

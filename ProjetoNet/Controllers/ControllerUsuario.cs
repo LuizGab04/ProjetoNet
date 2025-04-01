@@ -1,24 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjetoNet.Model;
-using ProjetoNet.Repositories;
 using ProjetoNet.Repositories.Interfaces;
-using ZstdSharp.Unsafe;
+
 
 namespace ProjetoNet.Controllers
 {
+    [Route("api/controller")]
     [ApiController]
-    [Route("api/[Usuario]")]
-    public class ControllerUsuario : ControllerBase
+    public class UsuariosController : ControllerBase
     {
         private readonly IUsuario _UsuarioRepository;
 
-        public ControllerUsuario(IUsuario UsuarioRepository) => _UsuarioRepository = UsuarioRepository;
-        
+        public UsuariosController(IUsuario UsuarioRepository) => _UsuarioRepository = UsuarioRepository;
+
         [HttpPost]
         public async Task<ActionResult<Usuario>> CriarUsuario([FromBody] Usuario usuario)
         {
+            if (usuario == null)
+            {
+                return BadRequest("Usuário inválido.");
+            }
+
             try
             {
+                Console.WriteLine($"Recebido: {usuario.nome_usuario}, {usuario.email_usuario}, {usuario.senha_usuario}");
+
                 await _UsuarioRepository.AdicionarUsuario(usuario);
                 return Ok(usuario);
             }
@@ -27,6 +33,14 @@ namespace ProjetoNet.Controllers
                 return BadRequest(new { mensagem = ex.Message });
             }
         }
+
+        [HttpGet]
+        public IActionResult TesteApi()
+        {
+            return Ok("API funcionando!");
+        }
+
+        
 
     }
 }

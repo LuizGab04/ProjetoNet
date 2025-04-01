@@ -1,6 +1,6 @@
-2using Microsoft.AspNetCore.Connections;
-using ProjetoNet.Repositories;
 using ProjetoNet.Repositories.Interfaces;
+using Microsoft.AspNetCore.Connections;
+using ProjetoNet.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +37,7 @@ app.UseDefaultFiles(new DefaultFilesOptions());
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
-
 app.MapControllers();
+
+
 app.Run();

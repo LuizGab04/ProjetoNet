@@ -68,6 +68,7 @@
     <script type="module">
         import { Usuario } from "../Modelos/ModeloUsuario.js"
 
+
         function addStyle() {
             const sheet = new CSSStyleSheet();
             sheet.insertRule(`#botoes-login { display: none; }`, 0);
@@ -114,10 +115,16 @@
                     return;
                 }
 
+                const usuario = {
+                    nome_usuario: nome,
+                    email_usuario: email,
+                    senha_usuario: senha
+                };
+                console.log(usuario);  
 
                 try {
                     // Chama o método de cadastro na API
-                    const resposta = await Usuario.cadastrarUsuario();
+                    const resposta = await Usuario.cadastrarUsuario(usuario);
                     console.log(resposta);
 
                     // Feedback ao usuário
@@ -129,10 +136,12 @@
                 }
             });
 
+
             // 🔹 Adiciona evento ao botão de voltar
             document.getElementById("btVoltar").addEventListener("click", () => {
                 location.reload(); // Simplesmente recarrega a página para voltar ao login
             });
+            
         };
 
     </script>
