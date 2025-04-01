@@ -22,7 +22,13 @@
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(usuario),
             });
-            return response.json();
+
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`);
+            }
+
+            let data = await response.json().catch(() => null);
+            return data || { mensagem: "Nenhum conteúdo retornado" };
         } catch (error) {
             console.error("Erro ao ir para o back usuário:", error);
             alert("Erro ao cadastrar usuário!");

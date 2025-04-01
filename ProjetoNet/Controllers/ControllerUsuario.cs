@@ -7,7 +7,7 @@ using ZstdSharp.Unsafe;
 namespace ProjetoNet.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[Usuario]")]
     public class ControllerUsuario : ControllerBase
     {
         private readonly IUsuario _UsuarioRepository;
