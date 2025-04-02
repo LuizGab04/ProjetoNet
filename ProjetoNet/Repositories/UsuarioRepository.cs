@@ -43,6 +43,14 @@ namespace ProjetoNet.Repositories
             }
         }
 
+        public async Task<bool> EmailExiste(string? email_usuario)
+        {
+            using var conexao = _dbConexaoFactory.CreateConnection();
+            string sql = $"SELECT COUNT(*) FROM usuarios WHERE email_usuario = @email_usuario";
+            int count = await conexao.ExecuteScalarAsync<int>(sql, email_usuario);
+            return count > 0;
+        }
+
         Task<IEnumerable<Usuario>> IUsuario.ListarUsuarios()
         {
             throw new NotImplementedException();

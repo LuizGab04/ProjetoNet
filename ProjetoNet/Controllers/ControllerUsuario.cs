@@ -20,6 +20,9 @@ namespace ProjetoNet.Controllers
             {
                 return BadRequest("Usuário inválido.");
             }
+            if(await _UsuarioRepository.EmailExiste(usuario.email_usuario)){
+                return BadRequest(new { mensagem = "email já cadastrado"});
+            }
 
             try
             {

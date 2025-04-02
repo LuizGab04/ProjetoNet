@@ -7,5 +7,6 @@ namespace ProjetoNet.Repositories.Interfaces
         Task<IEnumerable<Usuario>> ListarUsuarios();
         Task<Usuario> GetUsuarioById(int id);
         Task<int> AdicionarUsuario(Usuario usuario);
+        Task<bool> EmailExiste(string? email_usuario);
     }
 }

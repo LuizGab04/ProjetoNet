@@ -4,7 +4,7 @@ export class Usuario {
     email_usuario
     senha_usuario
 
-    
+
     static appUrl = "http://localhost:5176/api/controller"
 
     static async listarUsuarios() {
@@ -29,5 +29,9 @@ export class Usuario {
         } catch (error) {
             alert("Erro ao cadastrar usuário!");
         }
+    }
+    static async validacaoEmail() { 
+        let response = await fetch(`${this.appUrl}/${email_usuario}`)
+        return response.json();
     }
 }
