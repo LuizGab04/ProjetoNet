@@ -19,13 +19,15 @@ namespace ProjetoNet.Controllers
             try
             {
                 bool emailJaExiste = await _UsuarioRepository.EmailExiste(usuario.email_usuario);
-                if (emailJaExiste)
+                if (emailJaExiste == true)
                 {
                     return BadRequest(new { mensagem = "email já cadastrado" });
                 }
-
-                await _UsuarioRepository.AdicionarUsuario(usuario);
-                return Ok(usuario);
+                else 
+                {
+                    await _UsuarioRepository.AdicionarUsuario(usuario);
+                    return Ok(usuario);
+                }
             }
             catch (Exception ex)
             {

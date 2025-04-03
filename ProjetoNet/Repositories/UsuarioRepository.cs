@@ -39,7 +39,7 @@ namespace ProjetoNet.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine($"Erro ao inserir no banco: {ex.Message}");
-                throw;  // Re-lance a exceção para ser capturada no controlador
+                throw;  
             }
         }
         
