@@ -18,12 +18,17 @@ namespace ProjetoNet.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(usuario.email_usuario))
+                {
+                    return BadRequest(new { mensagem = "email do usuário é obrigatório" });
+                }
+
                 bool emailJaExiste = await _UsuarioRepository.EmailExiste(usuario.email_usuario);
                 if (emailJaExiste == true)
                 {
                     return BadRequest(new { mensagem = "email já cadastrado" });
                 }
-                else 
+                else
                 {
                     await _UsuarioRepository.AdicionarUsuario(usuario);
                     return Ok(usuario);

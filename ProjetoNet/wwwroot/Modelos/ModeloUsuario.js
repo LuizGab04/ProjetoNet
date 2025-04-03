@@ -34,11 +34,11 @@
             });
         }
     }
-    static async validacaoEmail(email_usuario) {
+    static async validacaoEmail(usuario) {
         let response = await fetch(this.appUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(email_usuario),
+            body: JSON.stringify(usuario),
         });
         return response.json();
     }

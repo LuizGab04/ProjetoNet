@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Mysqlx;
 using ProjetoNet.Model;
 using ProjetoNet.Repositories.Interfaces;
 
@@ -45,14 +46,21 @@ namespace ProjetoNet.Repositories
         
         public async Task<bool> EmailExiste(string? email_usuario)
         {
-            if (string.IsNullOrWhiteSpace(email_usuario))
+            try
             {
-                throw new ArgumentException("O e-mail do usuário não pode ser nulo ou vazio.", nameof(email_usuario));
+                if (string.IsNullOrWhiteSpace(email_usuario))
+                {
+                    throw new ArgumentException("O e-mail do usuário não pode ser nulo ou vazio.", nameof(email_usuario));
+                }
+                using var conexao = _dbConexaoFactory.CreateConnection();
+                string sql = $"SELECT COUNT(*) FROM usuario WHERE email_usuario = @email_usuario; ";
+                int count = await conexao.ExecuteScalarAsync<int>(sql, new { email_usuario });
+                return count > 0;
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
             }
-            using var conexao = _dbConexaoFactory.CreateConnection();
-            string sql = $"SELECT COUNT(*) FROM usuario WHERE email_usuario = @email_usuario";
-            int count = await conexao.ExecuteScalarAsync<int>(sql, new { email_usuario });
-            return count > 0;
         }
 
         Task<IEnumerable<Usuario>> IUsuario.ListarUsuarios()

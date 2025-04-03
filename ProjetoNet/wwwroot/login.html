@@ -139,8 +139,8 @@
                 console.log(usuario.email_usuario)
                 try {
                     // Chama o método de cadastro na API
-                    const validacao = await Usuario.validacaoEmail(email)
-                    if (validacao === true) {
+                    const validacao = await Usuario.validacaoEmail(usuario)
+                    if (validacao == true) {
                         Swal.fire({
                             title: "Erro!",
                             text: "E-mail já cadastrado!",
