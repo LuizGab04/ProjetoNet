@@ -16,17 +16,13 @@ namespace ProjetoNet.Controllers
         [HttpPost]
         public async Task<ActionResult<Usuario>> CriarUsuario([FromBody] Usuario usuario)
         {
-            if (usuario == null)
-            {
-                return BadRequest("Usuário inválido.");
-            }
-            if(await _UsuarioRepository.EmailExiste(usuario.email_usuario)){
-                return BadRequest(new { mensagem = "email já cadastrado"});
-            }
-
             try
             {
-                Console.WriteLine($"Recebido: {usuario.nome_usuario}, {usuario.email_usuario}, {usuario.senha_usuario}");
+                bool emailJaExiste = await _UsuarioRepository.EmailExiste(usuario.email_usuario);
+                if (emailJaExiste)
+                {
+                    return BadRequest(new { mensagem = "email já cadastrado" });
+                }
 
                 await _UsuarioRepository.AdicionarUsuario(usuario);
                 return Ok(usuario);
@@ -42,8 +38,5 @@ namespace ProjetoNet.Controllers
         {
             return Ok("API funcionando!");
         }
-
-        
-
     }
 }

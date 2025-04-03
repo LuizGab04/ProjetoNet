@@ -42,12 +42,16 @@ namespace ProjetoNet.Repositories
                 throw;  // Re-lance a exceção para ser capturada no controlador
             }
         }
-
+        
         public async Task<bool> EmailExiste(string? email_usuario)
         {
+            if (string.IsNullOrWhiteSpace(email_usuario))
+            {
+                throw new ArgumentException("O e-mail do usuário não pode ser nulo ou vazio.", nameof(email_usuario));
+            }
             using var conexao = _dbConexaoFactory.CreateConnection();
-            string sql = $"SELECT COUNT(*) FROM usuarios WHERE email_usuario = @email_usuario";
-            int count = await conexao.ExecuteScalarAsync<int>(sql, email_usuario);
+            string sql = $"SELECT COUNT(*) FROM usuario WHERE email_usuario = @email_usuario";
+            int count = await conexao.ExecuteScalarAsync<int>(sql, new { email_usuario });
             return count > 0;
         }
 

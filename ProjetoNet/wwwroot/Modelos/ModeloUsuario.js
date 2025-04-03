@@ -1,5 +1,4 @@
-﻿
-export class Usuario {
+﻿export class Usuario {
     nome_usuario
     email_usuario
     senha_usuario
@@ -27,11 +26,20 @@ export class Usuario {
             let data = await response.json().catch(() => null);
             return data || { mensagem: "Nenhum conteúdo retornado" };
         } catch (error) {
-            alert("Erro ao cadastrar usuário!");
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+                footer: '<a href="#">Why do I have this issue?</a>'
+            });
         }
     }
-    static async validacaoEmail() { 
-        let response = await fetch(`${this.appUrl}/${email_usuario}`)
+    static async validacaoEmail(email_usuario) {
+        let response = await fetch(this.appUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(email_usuario),
+        });
         return response.json();
     }
 }
