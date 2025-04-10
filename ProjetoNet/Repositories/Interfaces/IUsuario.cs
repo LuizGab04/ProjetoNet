@@ -4,9 +4,8 @@ namespace ProjetoNet.Repositories.Interfaces
 {
     public interface IUsuario
     {
-        Task<IEnumerable<Usuario>> ListarUsuarios();
-        Task<Usuario> GetUsuarioById(int id);
         Task<int> AdicionarUsuario(Usuario usuario);
         Task<bool> EmailExiste(string email_usuario);
+        Task<Usuario?> GetUsuarioPorEmail(String email_usuario);
     }
 }
