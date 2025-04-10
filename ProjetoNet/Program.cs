@@ -1,8 +1,25 @@
 using ProjetoNet.Repositories.Interfaces;
 using Microsoft.AspNetCore.Connections;
 using ProjetoNet.Repositories;
+using Microsoft.IdentityModel.Tokens; 
+using System.Text; 
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        var config = builder.Configuration;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = config["Jwt:Issuer"],
+            ValidAudience = config["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]!))
+        };
+    });
 
 builder.Services.AddSingleton<DbConexaoFactory>();
 builder.Services.AddScoped<IUsuario, UsuarioRepository>();
@@ -36,6 +53,7 @@ app.UseCors("CorsPolicy");
 app.UseDefaultFiles(new DefaultFilesOptions());
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

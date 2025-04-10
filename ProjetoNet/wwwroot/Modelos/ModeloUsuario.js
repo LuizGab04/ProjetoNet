@@ -4,7 +4,7 @@
     senha_usuario
 
 
-    static appUrl = "http://localhost:5176/api/controller"
+    static appUrl = "http://localhost:5176/api/usuario"
 
     static async listarUsuarios() {
         let response = await fetch(this.appUrl);
@@ -16,23 +16,13 @@
         return response.json();
     }
     static async cadastrarUsuario(usuario) {
-        try {
-            let response = await fetch(this.appUrl, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(usuario),
-            });
+        let response = await fetch(this.appUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(usuario),
+        });
 
-            let data = await response.json().catch(() => null);
-            return data || { mensagem: "Nenhum conteúdo retornado" };
-        } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
-                footer: '<a href="#">Why do I have this issue?</a>'
-            });
-        }
+        return response.json();
     }
     static async validacaoEmail(usuario) {
         let response = await fetch(this.appUrl, {
@@ -40,6 +30,17 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(usuario),
         });
+
+        console.log(response)
         return response.json();
+    }
+
+    static async loginUsuario(UsuarioLogin) {
+        let response = await fetch(this.appUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(UsuarioLogin),
+        });
+
     }
 }
