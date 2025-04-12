@@ -36,25 +36,25 @@ namespace ProjetoNet.Controllers
         }
 
       [HttpPost("login")]
-        public async Task<ActionResult<Usuario>> Login([FromBody] Usuario usuarioLogin)
+        public async Task<ActionResult<Usuario>> Login([FromBody] Usuario usuario)
         {
-            var usuario = await _UsuarioRepository.GetUsuarioPorEmail(usuarioLogin.email_usuario);
+            var usuarioLogin = await _UsuarioRepository.GetUsuarioPorEmail(usuario.email_usuario);
 
-            if (usuario == null || !BCrypt.Net.BCrypt.Verify(usuarioLogin.senha_usuario, usuario.senha_usuario))
+            if (usuarioLogin == null || !BCrypt.Net.BCrypt.Verify(usuario.senha_usuario, usuarioLogin.senha_usuario))
             {
-                return Unauthorized(new { mensagem = "E-mail ou senha inválidos." });
+                return Ok(new { mensagem = "Cadastro incorreto" });
             }
 
-            var token = _tokenServices.GerarToken(usuario);
+            var token = _tokenServices.GerarToken(usuarioLogin);
 
             return Ok(new
             {
                 token,
                 usuario = new
                 {
-                    usuario.id_usuario,
-                    usuario.nome_usuario,
-                    usuario.email_usuario
+                    usuarioLogin.id_usuario,
+                    usuarioLogin.nome_usuario,
+                    usuarioLogin.email_usuario
                 }
             });
         }

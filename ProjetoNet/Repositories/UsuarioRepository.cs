@@ -37,8 +37,9 @@ namespace ProjetoNet.Repositories
         }
         public async Task<Usuario?> GetUsuarioPorEmail(string? email_usuario)
         {
+
             using var conexao = _dbConexaoFactory.CreateConnection();
-            string sql = $"SELECT * FROM usuario WHERE email_usuario = {email_usuario}; ";
+            string sql = $"SELECT * FROM usuario WHERE email_usuario = '{email_usuario}'; ";
             return await conexao.QueryFirstOrDefaultAsync<Usuario>(sql, new { email_usuario });
         }
     }

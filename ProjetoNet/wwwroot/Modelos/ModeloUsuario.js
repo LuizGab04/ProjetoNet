@@ -16,7 +16,7 @@
         return response.json();
     }
     static async validacaoEmail(usuario) {
-        let response = await fetch(this.appUrl, {
+        let response = await fetch(`${this.appUrl}/criar`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(usuario),
@@ -31,6 +31,10 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(usuario),
         });
-        return response.json();
+
+
+        return response.json()
+        console.log("Token criado", response);
+
     }
 }
