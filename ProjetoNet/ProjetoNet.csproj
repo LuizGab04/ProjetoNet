@@ -23,6 +23,7 @@
     <Content Remove="wwwroot\assets\css\theme-rtl - Cópia.css.map" />
     <Content Remove="wwwroot\assets\css\theme-rtl - Cópia.min.css" />
     <Content Remove="wwwroot\assets\css\theme-rtl - Cópia.min.css.map" />
+    <Content Remove="wwwroot\Modelos\deslogarUsuario.js" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,20 +2,16 @@
 <html class="navbar-vertical-collapsed" lang="pt-br" dir="ltr">
 
 <head>
-    <script>
-        window.addEventListener("DOMContentLoaded", () => {
+    <script>window.addEventListener("DOMContentLoaded", () => {
             const token = localStorage.getItem("token");
-             const nome = localStorage.getItem("nomeUsuario");
-    const nomeEl = document.getElementById("nomeUsuario");
-            console.log("Token carregado:", token);
-             if (nomeEl && nome) {
-        nomeEl.innerText = `Olá, ${nome}`;
-    }
+            const nome = localStorage.getItem("nome_usuario")
+            console.log("Token carregado:", `${token} e nome ${nome}`);
+
+            document.getElementById("nomeUsuario").innerHTML = `<p>Olá, ${nome}!</p>`
             if (!token) {
                 window.location.href = "login.html";
             }
-        });
-    </script>
+        });</script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -64,8 +60,12 @@
             linkRTL.setAttribute('disabled', true);
             userLinkRTL.setAttribute('disabled', true);
         }</script>
+    <style>
+        #nomeUsuario {
+            padding-top: 11px;
+        }
+    </style>
 </head>
-
 
 <body class="overflow-hidden">
 
@@ -102,7 +102,7 @@
                             <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
                                 <div class="bg-white dark__bg-1000 rounded-2 py-2">
                                     <a class="dropdown-item" href="../pages/user/settings.html">Settings</a>
-                                    <a class="dropdown-item" href="login.html">Logout</a>
+                                    <a class="dropdown-item" href="#" onclick="deslogarUsuario()">Logout</a>
                                 </div>
                             </div>
                         </li>
@@ -250,7 +250,14 @@
     <script src="../vendors/lodash/lodash.min.js"></script>
     <script src="../vendors/list.js/list.min.js"></script>
     <script src="../assets/js/theme.js"></script>
-
+    <script>
+    
+        function deslogarUsuario() {
+            localStorage.removeItem("token")
+            localStorage.removeItem("nome_usuario")
+            window.location.href = "login.html"
+        }
+    </script>
 </body>
 
 </html>

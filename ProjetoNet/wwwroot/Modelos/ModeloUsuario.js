@@ -35,6 +35,6 @@
 
         return response.json()
         console.log("Token criado", response);
-
     }
+
 }

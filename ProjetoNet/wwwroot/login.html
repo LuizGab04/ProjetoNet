@@ -171,11 +171,10 @@
             }
 
             const resposta = await Usuario.loginUsuario(usuario)
-            console.log(resposta)
 
             if (!resposta.mensagem) {
                 localStorage.setItem("token", resposta.token)
-                localStorage.setItem("nome_usuario",resposta.nome_usuario)
+                localStorage.setItem("nome_usuario", resposta.usuario.nome_usuario)
                 Swal.fire({
                     title: "Login realizado com sucesso!",
                     icon: "success"
