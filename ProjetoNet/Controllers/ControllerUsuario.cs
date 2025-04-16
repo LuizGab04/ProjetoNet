@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProjetoNet.Model;
+using ProjetoNet.Repositories;
 using ProjetoNet.Repositories.Interfaces;
 using ProjetoNet.Services;
+using System.Security.Claims;
 
 
 namespace ProjetoNet.Controllers
@@ -28,14 +31,14 @@ namespace ProjetoNet.Controllers
                 return Ok(new { mensagem = true });
             }
             await _UsuarioRepository.AdicionarUsuario(usuario);
-            return Ok(new 
-            { 
+            return Ok(new
+            {
                 usuario.nome_usuario,
                 usuario.email_usuario
             });
         }
 
-      [HttpPost("login")]
+        [HttpPost("login")]
         public async Task<ActionResult<Usuario>> Login([FromBody] Usuario usuario)
         {
             var usuarioLogin = await _UsuarioRepository.GetUsuarioPorEmail(usuario.email_usuario);
@@ -54,10 +57,43 @@ namespace ProjetoNet.Controllers
                 {
                     usuarioLogin.id_usuario,
                     usuarioLogin.nome_usuario,
-                    usuarioLogin.email_usuario
+                    usuarioLogin.email_usuario,
+                    usuarioLogin.foto_perfil
                 }
             });
         }
+
+        [HttpPost("foto")]
+        public async Task<IActionResult> UploadFoto( IFormFile foto)
+        {
+            if (foto == null || foto.Length == 0)
+            {
+                return BadRequest(new { mensagem = "Nenhuma foto foi enviada." });
+            }
+
+            var email = User.FindFirst(ClaimTypes.Email)?.Value;
+            
+            using var memoryStream = new MemoryStream();
+            await foto.CopyToAsync(memoryStream);
+            var fotoBytes = memoryStream.ToArray();
+
+            await _UsuarioRepository.SalvarFotoPerfilAsync(email, fotoBytes);
+
+            return Ok(new { mensagem = "Foto enviada com sucesso!" });
+        }
+
+        [HttpGet("fotoPerfil")]
+        public async Task<IActionResult> GetFotoPerfil()
+        {
+            var email = User.FindFirst(ClaimTypes.Email)?.Value;
+            if (string.IsNullOrEmpty(email)) return Unauthorized();
+
+            var fotoBytes = await _UsuarioRepository.ObterFotoPerfilAsync(email);
+            if (fotoBytes == null || fotoBytes.Length == 0) return NotFound();
+
+            return File(fotoBytes, "image/jpeg"); 
+        }
+
 
         [HttpGet("teste-api")]
         public IActionResult TesteApi()

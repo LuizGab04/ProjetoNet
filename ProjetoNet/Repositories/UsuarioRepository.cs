@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using MySql.Data.MySqlClient;
 using ProjetoNet.Model;
 using ProjetoNet.Repositories.Interfaces;
 
@@ -16,8 +17,8 @@ namespace ProjetoNet.Repositories
 
             using var conexao = _dbConexaoFactory.CreateConnection();
             string sql = $"INSERT INTO Usuario(nome_usuario, email_usuario, senha_usuario) VALUES (@nome_usuario, @email_usuario, @senha_usuario); ";
-            return await conexao.ExecuteScalarAsync<int>(sql, new 
-            { 
+            return await conexao.ExecuteScalarAsync<int>(sql, new
+            {
                 usuario.nome_usuario,
                 usuario.email_usuario,
                 senha_usuario = senhaHash
@@ -41,6 +42,20 @@ namespace ProjetoNet.Repositories
             using var conexao = _dbConexaoFactory.CreateConnection();
             string sql = $"SELECT * FROM usuario WHERE email_usuario = '{email_usuario}'; ";
             return await conexao.QueryFirstOrDefaultAsync<Usuario>(sql, new { email_usuario });
+        }
+
+        public async Task SalvarFotoPerfilAsync(string email_usuario, byte[] foto)
+        {
+            using var conexao = _dbConexaoFactory.CreateConnection();
+            string query = $"UPDATE usuario SET foto_perfil = @foto WHERE email_usuario = '{email_usuario}';";
+            await conexao.ExecuteAsync(query, new { foto, email_usuario });
+        }
+        public async Task<byte[]?> ObterFotoPerfilAsync(string email_usuario)
+        {
+            using var conexao = _dbConexaoFactory.CreateConnection();
+
+            string query = $"SELECT foto_perfil FROM usuarios WHERE email_usuario = '{email_usuario}';";
+            return await conexao.ExecuteScalarAsync<byte[]>(query, new { email_usuario });
         }
     }
 }

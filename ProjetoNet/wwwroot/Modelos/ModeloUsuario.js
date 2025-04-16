@@ -2,7 +2,7 @@
     nome_usuario
     email_usuario
     senha_usuario
-
+    foto_perfil
 
     static appUrl = "http://localhost:5176/api/usuario"
 
@@ -37,4 +37,21 @@
         console.log("Token criado", response);
     }
 
+    static async uploadFoto(formData) {
+        const token = localStorage.getItem("token");
+
+        const response = await fetch(`${this.appUrl}/foto`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+            body: formData
+        });
+
+        const resultado = await response.json();
+        console.log("Resposta da API:", resultado);
+    }
 }
+
+    
+
