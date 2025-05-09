@@ -34,7 +34,6 @@
 
 
         return response.json()
-        console.log("Token criado", response);
     }
 
     static async uploadFoto(formData) {
@@ -48,10 +47,12 @@
             body: formData
         });
 
-        const resultado = await response.json();
-        console.log("Resposta da API:", resultado);
+        const data = await response.json();
+        const base64 = data.fotoBytes;
+
+        localStorage.setItem("foto_perfil", base64)
     }
 }
 
-    
+
 

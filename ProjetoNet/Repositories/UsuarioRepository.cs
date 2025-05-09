@@ -48,7 +48,7 @@ namespace ProjetoNet.Repositories
         {
             using var conexao = _dbConexaoFactory.CreateConnection();
             string query = $"UPDATE usuario SET foto_perfil = @foto WHERE email_usuario = '{email_usuario}';";
-            await conexao.ExecuteAsync(query, new { foto, email_usuario });
+             await conexao.ExecuteAsync(query, new { foto, email_usuario });
         }
         public async Task<byte[]?> ObterFotoPerfilAsync(string email_usuario)
         {
