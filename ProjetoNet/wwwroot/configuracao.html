@@ -25,23 +25,17 @@
     </main>
     <script type="module">
         import { Usuario } from "../Modelos/ModeloUsuario.js"
-        window.addEventListener("DOMContentLoaded", () => {
+        window.addEventListener("DOMContentLoaded", async () => {
+            await Usuario.pegarFoto()
             const token = localStorage.getItem("token");
             const nome = localStorage.getItem("nome_usuario")
-            const foto = localStorage.getItem("foto_perfil")
-            if (foto) {
-                document.getElementById("fotoUsuario").innerHTML = `<img class="rounded-circle" src="data:image/jpeg;base64,${foto}"/> `
-            } else {
-                document.getElementById("fotoUsuario").innerHTML = `<img class="rounded-circle" src="assets/img/avatar.png"/> `
-            }
-
-            console.log(`Olá, ${nome} o seu token é ${token}`)
-            document.getElementById("nomeUsuario").innerHTML = `<p>Olá, ${nome}!</p>`
+               document.getElementById("nomeUsuario").innerHTML = `<p>Olá, ${nome}!</p>`
 
             if (!token) {
                 window.location.href = "login.html";
             }
         });
+
         enviarFoto.onclick = async () => {
             const input = document.getElementById("inputFoto");
             const file = input.files[0];
@@ -55,7 +49,6 @@
             formData.append("foto", file);
 
             const resposta = await Usuario.uploadFoto(formData)
-            console.log(resposta)
         }
     </script>
 </body>

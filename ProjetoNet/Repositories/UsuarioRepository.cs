@@ -48,13 +48,13 @@ namespace ProjetoNet.Repositories
         {
             using var conexao = _dbConexaoFactory.CreateConnection();
             string query = $"UPDATE usuario SET foto_perfil = @foto WHERE email_usuario = '{email_usuario}';";
-             await conexao.ExecuteAsync(query, new { foto, email_usuario });
+            await conexao.ExecuteAsync(query, new { foto, email_usuario });
         }
         public async Task<byte[]?> ObterFotoPerfilAsync(string email_usuario)
         {
             using var conexao = _dbConexaoFactory.CreateConnection();
 
-            string query = $"SELECT foto_perfil FROM usuarios WHERE email_usuario = '{email_usuario}';";
+            string query = $"SELECT foto_perfil FROM usuario WHERE email_usuario = '{email_usuario}';";
             return await conexao.ExecuteScalarAsync<byte[]>(query, new { email_usuario });
         }
     }

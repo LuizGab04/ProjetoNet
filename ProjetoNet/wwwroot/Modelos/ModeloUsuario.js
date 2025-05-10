@@ -50,7 +50,34 @@
         const data = await response.json();
         const base64 = data.fotoBytes;
 
+        console.log(data)
+
         localStorage.setItem("foto_perfil", base64)
+    }
+
+    static async pegarFoto() {
+        const token = localStorage.getItem("token");
+
+        const response = await fetch(`${this.appUrl}/fotoPerfil`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+ 
+        const data = await response.json();
+        const base64 = data.fotoBytes;
+
+        console.log(data)
+
+        const foto = localStorage.getItem("foto_perfil", base64)
+
+        if (localStorage) {
+            document.getElementById("fotoUsuario").innerHTML = `<img class="rounded-circle" src="data:image/jpeg;base64,${foto}"/> `
+        }
+        else {
+            document.getElementById("fotoUsuario").innerHTML = `<img class="rounded-circle" src="assets/img/team/avatar.png"/> `
+        }
     }
 }
 

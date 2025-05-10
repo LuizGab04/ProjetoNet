@@ -79,7 +79,7 @@ namespace ProjetoNet.Controllers
 
             await _UsuarioRepository.SalvarFotoPerfilAsync(email, fotoBytes);
 
-            return Ok(new { mensagem = "Foto enviada com sucesso!" });
+            return Ok(new { fotoBytes });
         }
 
         [HttpGet("fotoPerfil")]
@@ -89,11 +89,15 @@ namespace ProjetoNet.Controllers
             if (string.IsNullOrEmpty(email)) return Unauthorized();
 
             var fotoBytes = await _UsuarioRepository.ObterFotoPerfilAsync(email);
-            if (fotoBytes == null || fotoBytes.Length == 0) return NotFound();
+            if (fotoBytes == null || fotoBytes.Length == 0)
+            {
 
-            return File(fotoBytes, "image/jpeg"); 
+                return Ok(new { mensagem = "usuario não tem imagem" });
+            }else
+            {
+                return Ok(new { fotoBytes });
+            }
         }
-
 
         [HttpGet("teste-api")]
         public IActionResult TesteApi()

@@ -4,18 +4,10 @@
 <head>
     <script>
         window.addEventListener("DOMContentLoaded", () => {
+            mostraFoto()
             const token = localStorage.getItem("token");
             const nome = localStorage.getItem("nome_usuario")
-            const foto = localStorage.getItem("foto_perfil")
-
-            document.getElementById("nomeUsuario").innerHTML = `<p>Olá, ${nome}!</p>`
-            if (foto) {
-                document.getElementById("fotoUsuario").innerHTML = `<img class="rounded-circle" src="data:image/jpeg;base64,${foto}"/> `
-            }
-            else {
-                document.getElementById("fotoUsuario").innerHTML = `<img class="rounded-circle" src="assets/img/avatar.png"/> `
-            }
-
+        
             if (!token) {
                 window.location.href = "login.html";
             }
@@ -265,10 +257,22 @@
         function deslogarUsuario() {
             localStorage.removeItem("token")
             localStorage.removeItem("nome_usuario")
+            localStorage.removeItem("foto_perfil")
             window.location.href = "login.html"
         }
         function configuracao() {
             window.location.href = "configuracao.html"
+        }
+
+        async function mostraFoto() {
+            const resposta = await Usuario.pegarFoto()
+            console.log(resposta)
+            if (!resposta) {
+                document.getElementById("fotoUsuario").innerHTML = `<img class="rounded-circle" src="assets/img/team/avatar.png"/> `
+            }
+            else {
+                document.getElementById("fotoUsuario").innerHTML = `<img class="rounded-circle" src="data:image/jpeg;base64,${foto}"/> `
+            }
         }
     </script>
 </body>

@@ -175,6 +175,8 @@
             if (!resposta.mensagem) {
                 localStorage.setItem("token", resposta.token)
                 localStorage.setItem("nome_usuario", resposta.usuario.nome_usuario)
+                localStorage.setItem("foto_perfil", resposta.usuario.foto_perfil)
+
                 Swal.fire({
                     title: "Login realizado com sucesso!",
                     icon: "success"
