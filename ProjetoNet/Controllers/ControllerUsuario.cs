@@ -83,7 +83,7 @@ namespace ProjetoNet.Controllers
         }
 
         [HttpGet("fotoPerfil")]
-        public async Task<IActionResult> GetFotoPerfil()
+        public async Task<IActionResult?> GetFotoPerfil()
         {
             var email = User.FindFirst(ClaimTypes.Email)?.Value;
             if (string.IsNullOrEmpty(email)) return Unauthorized();
@@ -92,7 +92,7 @@ namespace ProjetoNet.Controllers
             if (fotoBytes == null || fotoBytes.Length == 0)
             {
 
-                return Ok(new { mensagem = "usuario não tem imagem" });
+                return NoContent();
             }else
             {
                 return Ok(new { fotoBytes });

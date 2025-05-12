@@ -49,6 +49,7 @@
             formData.append("foto", file);
 
             const resposta = await Usuario.uploadFoto(formData)
+            await Usuario.pegarFoto()
         }
     </script>
 </body>

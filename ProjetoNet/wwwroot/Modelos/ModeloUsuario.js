@@ -50,8 +50,6 @@
         const data = await response.json();
         const base64 = data.fotoBytes;
 
-        console.log(data)
-
         localStorage.setItem("foto_perfil", base64)
     }
 
@@ -65,19 +63,26 @@
             }
         });
  
+        if (response.status === 204) {
+            document.getElementById("fotoUsuario").innerHTML = `
+            <img class="rounded-circle" src="assets/img/team/avatar.png" />
+        `;
+            return;
+        }
+
+        if (!response.ok) {
+            console.error("Erro ao buscar a foto:", response.status);
+            return;
+        }
+
         const data = await response.json();
         const base64 = data.fotoBytes;
 
-        console.log(data)
+        localStorage.setItem("foto_perfil", base64);
 
-        const foto = localStorage.getItem("foto_perfil", base64)
-
-        if (localStorage) {
-            document.getElementById("fotoUsuario").innerHTML = `<img class="rounded-circle" src="data:image/jpeg;base64,${foto}"/> `
-        }
-        else {
-            document.getElementById("fotoUsuario").innerHTML = `<img class="rounded-circle" src="assets/img/team/avatar.png"/> `
-        }
+        document.getElementById("fotoUsuario").innerHTML = `
+        <img class="rounded-circle" src="data:image/jpeg;base64,${base64}" />
+    `;
     }
 }
 

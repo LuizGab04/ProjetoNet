@@ -26,6 +26,7 @@ builder.Services.AddAuthentication("Bearer")
 builder.Services.AddScoped<TokenServices>();
 builder.Services.AddSingleton<DbConexaoFactory>();
 builder.Services.AddScoped<IUsuario, UsuarioRepository>();
+builder.Services.AddScoped<ISprint, SprintRepository>();
 // Configuração de serviços
 builder.Services.AddControllersWithViews();
 builder.Services.AddCors(options =>
