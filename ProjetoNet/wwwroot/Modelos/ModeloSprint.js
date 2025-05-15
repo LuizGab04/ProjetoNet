@@ -18,19 +18,16 @@
         const container = document.getElementById("kanbanGridContainer"); // onde o HTML será injetado
         container.innerHTML += `
         <div class="kanban-container scrollbar me-n3 shadow pt-4">
-            <div class="container d-flex">
+            <div class="px-3 d-flex">
                 <div id="nomeSprintCadastrada">
-                    <p>ID: ${sprint.id_sprint} Nome:${sprint.nome_sprint}</p>
+                    <p>${sprint.nome_sprint}</p>
                 </div>
                 <div class="dropdown font-sans-serif btn-reveal-trigger">
                     <button class="btn btn-sm btn-reveal py-0 px-2" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <a<i class="bi bi-gear-fill p-3"></i></a>
+                        <a<i class="bi bi-three-dots-vertical"></i></a>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end py-0">
-                        <a class="dropdown-item" href="#!">Add Card</a>
-                        <a class="dropdown-item" href="#!">Edit</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="#!">Remove</a>
+                        <button id="excluirSprint" class="dropdown-item text-danger">Remove</button>
                     </div>
                 </div>
             </div>
@@ -47,17 +44,6 @@
         <div class="kanban-column">
             <div class="kanban-column-header">
                 <h5 class="fs-0 mb-0">${titulo} <span class="text-500" style="background-color: red">Adicionar NUMERO de cards</span></h5>
-                <div class="dropdown font-sans-serif btn-reveal-trigger">
-                    <button class="btn btn-sm btn-reveal py-0 px-2" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="fas fa-ellipsis-h"></span>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end py-0">
-                        <a class="dropdown-item" href="#!">Add Card</a>
-                        <a class="dropdown-item" href="#!">Edit</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="#!">Remove</a>
-                    </div>
-                </div>
             </div>
             <div class="kanban-items-container scrollbar">
                 <form class="add-card-form mt-3">
@@ -89,5 +75,15 @@
             Sprint.carregarSprint(sprint); // carrega cada uma individualmente
         });
 
+    }
+
+    static async excluirSprint() {
+        let response = await fetch(`${this.appUrl}/excluirSprint`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(sprint),
+        });
+
+        return response.json()
     }
 }
