@@ -42,5 +42,18 @@ namespace ProjetoNet.Controllers
 
             }
         }
+
+        [HttpPost("excluirSprint")]
+        public async Task<ActionResult> ExcluirSprint(int id_sprint)
+        {
+            try
+            {
+                return Ok(await _sprintRepository.ExcluirSprint(id_sprint));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = "Erro ao mostrar a sprint", erro = ex.Message });
+            }
+        }
     }
 }

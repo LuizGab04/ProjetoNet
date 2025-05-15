@@ -6,5 +6,6 @@ namespace ProjetoNet.Repositories.Interfaces
     {
         Task<int> AdicionarSprint(Sprint sprint);
         Task<IEnumerable<Sprint>> MostrarSprints();
+        Task<int?> ExcluirSprint(int id_sprint);
     }
 }

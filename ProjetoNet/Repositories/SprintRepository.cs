@@ -21,14 +21,20 @@ namespace ProjetoNet.Repositories
             });
         }
 
-        public async Task<IEnumerable<Sprint>> MostrarSprints() // Change return type to IEnumerable<Sprint>
+        public async Task<IEnumerable<Sprint>> MostrarSprints()
         {
             using var conexao = _dbConexaoFactory.CreateConnection();
             string sql = $"select * from sprint order by id_sprint desc;";
 
-            return await conexao.QueryAsync<Sprint>(sql); // Use QueryAsync<T> to return a collection of Sprint objects
+            return await conexao.QueryAsync<Sprint>(sql);
         }
 
-  
+        public async Task<int?> ExcluirSprint(int id_sprint)
+        {
+            using var conexao = _dbConexaoFactory.CreateConnection();
+            string sql = $"DELETE FROM sprint WHERE id_sprint = @id_sprint;";
+
+            return await conexao.ExecuteAsync(sql, new { id_sprint });
+        }
     }
 }

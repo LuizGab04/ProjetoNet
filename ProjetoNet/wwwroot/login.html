@@ -1,4 +1,4 @@
-﻿    <!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <link href="../vendors/glightbox/glightbox.min.css" rel="stylesheet">
@@ -80,27 +80,31 @@
             document.querySelector('h1').innerHTML = "Realize o seu Cadastro"
             document.getElementById("botoes-login").classList.add(addStyle())
             document.getElementById("form-container").innerHTML = `
-                                                        <form>
-                                                            <div class="mb-3">
-                                                                <label for="inputNome" class="form-label">Nome Completo</label>
-                                                                <input type="text" class="form-control" id="inputNome">
-                                                            </div>
-                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label">Endereço de e-mail</label>
-                                                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                                             </div>
-                                                             <div class="mb-3">
-                                                                <label for="exampleInputPassword1" class="form-label">Senha</label>
-                                                                <input type="password" class="form-control" id="exampleInputPassword1">
-                                                             </div>
-                                                        </form>
-                                                          <div>
-                                                            <ul id="form-botoes" style=" list-style: none; display: flex; justify-content: center;">
-                                                                <li class="p-3"><button id="btVoltar" class="btn btn-primary">voltar</button></li>
-                                                                <li class="p-3"><button type="submit" id="btEnviarCadastro" class="btn btn-secondary">Cadastrar</button></li>
-                                                            </ul>
-                                                          </div>
-                                                            `;
+                                                            <form>
+                                                                <div class="mb-3">
+                                                                    <label for="inputNome" class="form-label">Nome Completo</label>
+                                                                    <input type="text" class="form-control" id="inputNome">
+                                                                </div>
+                                                                 <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Endereço de e-mail</label>
+                                                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                                                 </div>
+                                                                 <div class="mb-3">
+                                                                    <label for="exampleInputPassword1" class="form-label">Senha</label>
+                                                                    <input type="password" class="form-control" id="exampleInputPassword1">
+                                                                 </div>
+                                                                 <div class="mb-3">
+                                                                     <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
+                                                                     <input type="password" class="form-control" id="confirmarSenha">
+                                                                 </div>
+                                                            </form>
+                                                              <div>
+                                                                <ul id="form-botoes" style=" list-style: none; display: flex; justify-content: center;">
+                                                                    <li class="p-3"><button id="btVoltar" class="btn btn-primary">voltar</button></li>
+                                                                    <li class="p-3"><button type="submit" id="btEnviarCadastro" class="btn btn-secondary">Cadastrar</button></li>
+                                                                </ul>
+                                                              </div>
+                                                                `;
 
             document.getElementById("btEnviarCadastro").addEventListener("click", async function (event) {
                 event.preventDefault(); // Evita o recarregamento da página
@@ -109,13 +113,17 @@
                 const nome = document.getElementById("inputNome").value;
                 const email = document.getElementById("exampleInputEmail1").value;
                 const senha = document.getElementById("exampleInputPassword1").value;
+                const confirmarSenha = document.getElementById("confirmarSenha").value
+
+
 
                 // Validação simples
-                if (!nome || !email || !senha) {
+                if (!nome || !email || !senha || !confirmarSenha) {
                     if (!nome) document.getElementById("inputNome").classList.add("preencha");
                     if (!email) document.getElementById("exampleInputEmail1").classList.add("preencha");
                     if (!senha) document.getElementById("exampleInputPassword1").classList.add("preencha");
-
+                    if (!confirmarSenha) document.getElementById("confirmarSenha").classList.add("preencha");
+                    
                     Swal.fire({
                         title: "Preencha os campos vazios",
                         icon: "warning"

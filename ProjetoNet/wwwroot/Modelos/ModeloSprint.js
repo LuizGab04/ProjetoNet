@@ -16,13 +16,24 @@
 
     static carregarSprint(sprint) {
         const container = document.getElementById("kanbanGridContainer"); // onde o HTML será injetado
-
         container.innerHTML += `
-        <div class="kanban-container scrollbar me-n3">
-            <div id="nomeSprintCadastrada">
-                <p>${sprint.nome_sprint}</p>
+        <div class="kanban-container scrollbar me-n3 shadow pt-4">
+            <div class="container d-flex">
+                <div id="nomeSprintCadastrada">
+                    <p>ID: ${sprint.id_sprint} Nome:${sprint.nome_sprint}</p>
+                </div>
+                <div class="dropdown font-sans-serif btn-reveal-trigger">
+                    <button class="btn btn-sm btn-reveal py-0 px-2" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a<i class="bi bi-gear-fill p-3"></i></a>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end py-0">
+                        <a class="dropdown-item" href="#!">Add Card</a>
+                        <a class="dropdown-item" href="#!">Edit</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger" href="#!">Remove</a>
+                    </div>
+                </div>
             </div>
-
             ${this.criarColuna("Backlog do Produto")}
             ${this.criarColuna("Fazendo")}
             ${this.criarColuna("Esperando Teste")}
