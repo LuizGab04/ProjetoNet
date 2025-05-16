@@ -12,13 +12,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\NovaPasta\**" />
+    <Content Remove="Services\NovaPasta\**" />
+    <EmbeddedResource Remove="Services\NovaPasta\**" />
+    <None Remove="Services\NovaPasta\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\assets\css\theme-rtl - Cópia.css" />
+    <Content Remove="wwwroot\assets\css\theme-rtl - Cópia.css.map" />
+    <Content Remove="wwwroot\assets\css\theme-rtl - Cópia.min.css" />
+    <Content Remove="wwwroot\assets\css\theme-rtl - Cópia.min.css.map" />
+    <Content Remove="wwwroot\assets\img\team\1.jpg" />
+    <Content Remove="wwwroot\Modelos\deslogarUsuario.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ContainerPort Include="8081" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Model\" />
-    <Folder Include="Repositories\Interfaces\" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.8.0" />
+    <PackageReference Include="MySql.Data" Version="9.2.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.8.0" />
   </ItemGroup>
 
 </Project>

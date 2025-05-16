@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html class="navbar-vertical-collapsed" lang="en-US" dir="ltr">
+<html class="navbar-vertical-collapsed" lang="pt-br" dir="ltr">
 
 <head>
     <meta charset="utf-8">
@@ -10,21 +10,24 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Falcon | Dashboard &amp; Web App Template</title>
+    <title>Fabrica de Software | Kanbam</title>
 
 
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicons/favicon-16x16.png">
     <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicons/favicon.ico">
-    <link rel="manifest" href="../assets/img/favicons/manifest.json">
     <meta name="msapplication-TileImage" content="../assets/img/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
     <script src="../assets/js/config.js"></script>
     <script src="../vendors/overlayscrollbars/OverlayScrollbars.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
     <!-- ===============================================-->
@@ -52,10 +55,14 @@
             linkRTL.setAttribute('disabled', true);
             userLinkRTL.setAttribute('disabled', true);
         }</script>
+    <style>
+        #nomeUsuario {
+            padding-top: 11px;
+        }
+    </style>
 </head>
 
-
-<body class="overflow-hidden">
+<body class="overflow-auto">
 
     <!-- ===============================================-->
     <!--    Main Content-->
@@ -74,23 +81,23 @@
                     var navbarStyle = localStorage.getItem("navbarStyle");
                     if (navbarStyle && navbarStyle !== 'transparent') {
                         document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
-                    }
-                </script>
+                    }</script>
             </nav>
             <div class="content">
                 <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand">
                     <ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
+                        <li id="nomeUsuario">
+
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link pe-0" id="navbarDropdownUser" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <div class="avatar avatar-xl">
-                                    <img class="rounded-circle" src="../assets/img/team/3-thumb.png" alt="" />
-
+                                <div id="fotoUsuario" class="avatar avatar-xl">
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
                                 <div class="bg-white dark__bg-1000 rounded-2 py-2">
-                                    <a class="dropdown-item" href="../pages/user/settings.html">Settings</a>
-                                    <a class="dropdown-item" href="../pages/authentication/card/logout.html">Logout</a>
+                                    <a id="configuracao" class="dropdown-item">Configuração</a>
+                                    <a id="deslogar" class="dropdown-item" href="#">Deslogar</a>
                                 </div>
                             </div>
                         </li>
@@ -102,121 +109,31 @@
                         <div class="vertical-line vertical-line-400 position-relative h-100 mx-3"></div>
                     </div>
                     <div class="col-auto d-flex align-items-center">
-                        <button class="btn btn-sm btn-falcon-default me-2 d-none d-md-block"><span class="fas fa-plus me-2"></span>Adicionar Coluna</button>
+                        <button class="btn btn-sm btn-falcon-default me-2 d-none d-md-block" data-bs-toggle="modal" data-bs-target="#modalSprint"><span class="fas fa-plus me-2"></span>Adicionar Sprint</button>
                     </div>
                 </div>
-                <div class="kanban-container scrollbar me-n3">
-                    <div class="kanban-column">
-                        <div class="kanban-column-header">
-                            <h5 class="fs-0 mb-0">Backlog do Produto <span class="text-500" style="background-color: red">Adicionar NUMERO de cards</span></h5>
-                            <div class="dropdown font-sans-serif btn-reveal-trigger">
-                                <button class="btn btn-sm btn-reveal py-0 px-2" type="button" id="kanbanColumn0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h"></span></button>
-                                <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="kanbanColumn0">
-                                    <a class="dropdown-item" href="#!">Add Card</a><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item" href="#!">Copy link</a>
-                                    <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kanban-items-container scrollbar">
-                            <form class="add-card-form mt-3">
-                                <textarea class="form-control" data-input="add-card" rows="2" placeholder="Enter a title for this card..."></textarea>
-                                <div class="row gx-2 mt-2">
-                                    <div class="col">
-                                        <button class="btn btn-primary btn-sm d-block w-100" type="button">Add</button>
-                                    </div>
-                                    <div class="col">
-                                        <button class="btn btn-outline-secondary btn-sm d-block w-100 border-400" type="button" data-btn-form="hide">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="kanban-column-footer">
-                            <button class="btn btn-link btn-sm d-block w-100 btn-add-card text-decoration-none text-600" type="button"><span class="fas fa-plus me-2"></span>Add another card</button>
+                <div id="kanbanGridContainer" class="kanban-container ">
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalSprint" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro da Sprint</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label for="nomeSprint" class="form-label">Nome da Sprint</label>
+                            <input type="text" id="nomeSprint" class="form-control">
                         </div>
                     </div>
-                    <div class="kanban-column">
-                        <div class="kanban-column-header">
-                            <h5 class="fs-0 mb-0">Fazendo <span class="text-500" style="background-color: red">Adicionar NUMERO de cards</span></h5>
-                            <div class="dropdown font-sans-serif btn-reveal-trigger">
-                                <button class="btn btn-sm btn-reveal py-0 px-2" type="button" id="kanbanColumn1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h"></span></button>
-                                <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="kanbanColumn1">
-                                    <a class="dropdown-item" href="#!">Add Card</a><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item" href="#!">Copy link</a>
-                                    <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kanban-items-container scrollbar">
-                            <form class="add-card-form mt-3">
-                                <textarea class="form-control" data-input="add-card" rows="2" placeholder="Enter a title for this card..."></textarea>
-                                <div class="row gx-2 mt-2">
-                                    <div class="col">
-                                        <button class="btn btn-primary btn-sm d-block w-100" type="button">Add</button>
-                                    </div>
-                                    <div class="col">
-                                        <button class="btn btn-outline-secondary btn-sm d-block w-100 border-400" type="button" data-btn-form="hide">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="kanban-column-footer">
-                            <button class="btn btn-link btn-sm d-block w-100 btn-add-card text-decoration-none text-600" type="button"><span class="fas fa-plus me-2"></span>Add another card</button>
-                        </div>
-                    </div>
-                    <div class="kanban-column">
-                        <div class="kanban-column-header">
-                            <h5 class="fs-0 mb-0">Em Teste <span class="text-500" style="background-color: red">Adicionar NUMERO de cards</span></h5>
-                            <div class="dropdown font-sans-serif btn-reveal-trigger">
-                                <button class="btn btn-sm btn-reveal py-0 px-2" type="button" id="kanbanColumn1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h"></span></button>
-                                <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="kanbanColumn1">
-                                    <a class="dropdown-item" href="#!">Add Card</a><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item" href="#!">Copy link</a>
-                                    <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kanban-items-container scrollbar">
-                            <form class="add-card-form mt-3">
-                                <textarea class="form-control" data-input="add-card" rows="2" placeholder="Enter a title for this card..."></textarea>
-                                <div class="row gx-2 mt-2">
-                                    <div class="col">
-                                        <button class="btn btn-primary btn-sm d-block w-100" type="button">Add</button>
-                                    </div>
-                                    <div class="col">
-                                        <button class="btn btn-outline-secondary btn-sm d-block w-100 border-400" type="button" data-btn-form="hide">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="kanban-column-footer">
-                            <button class="btn btn-link btn-sm d-block w-100 btn-add-card text-decoration-none text-600" type="button"><span class="fas fa-plus me-2"></span>Add another card</button>
-                        </div>
-                    </div>
-                    <div class="kanban-column">
-                        <div class="kanban-column-header">
-                            <h5 class="fs-0 mb-0">Concluído <span class="text-500" style="background-color: red">Adicionar NUMERO de cards</span></h5>
-                            <div class="dropdown font-sans-serif btn-reveal-trigger">
-                                <button class="btn btn-sm btn-reveal py-0 px-2" type="button" id="kanbanColumn2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h"></span></button>
-                                <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="kanbanColumn2">
-                                    <a class="dropdown-item" href="#!">Add Card</a><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item" href="#!">Copy link</a>
-                                    <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kanban-items-container scrollbar">
-                            <form class="add-card-form mt-3">
-                                <textarea class="form-control" data-input="add-card" rows="2" placeholder="Enter a title for this card..."></textarea>
-                                <div class="row gx-2 mt-2">
-                                    <div class="col">
-                                        <button class="btn btn-primary btn-sm d-block w-100" type="button">Add</button>
-                                    </div>
-                                    <div class="col">
-                                        <button class="btn btn-outline-secondary btn-sm d-block w-100 border-400" type="button" data-btn-form="hide">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="kanban-column-footer">
-                            <button class="btn btn-link btn-sm d-block w-100 btn-add-card text-decoration-none text-600" type="button"><span class="fas fa-plus me-2"></span>Add another card</button>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="cadastrarSprint" class="btn btn-primary">Adicionar Sprint</button>
                     </div>
                 </div>
             </div>
@@ -236,10 +153,78 @@
     <script src="../vendors/draggable/draggable.bundle.legacy.js"></script>
     <script src="../vendors/fontawesome/all.min.js"></script>
     <script src="../vendors/lodash/lodash.min.js"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
     <script src="../vendors/list.js/list.min.js"></script>
     <script src="../assets/js/theme.js"></script>
+    <script type="module">
+        import { Usuario } from "../Modelos/ModeloUsuario.js"
+        import { Sprint } from "../Modelos/ModeloSprint.js"
+        
+        window.addEventListener("DOMContentLoaded", async () => {
+            await Sprint.carregarTodasAsSprints()
+            await Usuario.pegarFoto()
+            const token = localStorage.getItem("token");
+            const nome = localStorage.getItem("nome_usuario")
+            document.getElementById("nomeUsuario").innerHTML = `<p>Olá, ${nome}!</p>`
+            if (!token) {
+                window.location.href = "login.html";
+            }
+        });
 
+        deslogar.onclick = () => {
+            localStorage.removeItem("token")
+            localStorage.removeItem("nome_usuario")
+            localStorage.removeItem("foto_perfil")
+            window.location.href = "login.html"
+        }
+
+        configuracao.onclick = () => {
+            window.location.href = "configuracao.html"
+        }
+
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const cadastrarSprint = document.getElementById("cadastrarSprint");
+
+            cadastrarSprint.onclick = async () => {
+                const nome = document.getElementById("nomeSprint").value
+
+                if (!nome) {
+                    Swal.fire({
+                        title: "Preencha os campos vazios",
+                        icon: "warning"
+                    });
+                    return;
+                }
+
+                const sprint = {
+                    nome_sprint: nome
+                };
+
+                const resposta = await Sprint.cadastrarSprint(sprint);
+
+                if (!resposta) {
+                    await Sprint.carregarSprint(sprint);
+                    document.getElementById("kanbanGridContainer").innerHTML = "";
+                    await Sprint.carregarTodasAsSprints()
+                    Swal.fire({
+                        title: "Sucesso!",
+                        text: "Sprint Cadastrada.",
+                        icon: "success"
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Erro!",
+                        text: "Ocorreu um erro ao cadastrar a sprint.",
+                        icon: "error"
+                    });
+                }
+            };
+
+            excluirSprint.onclick = async () => {
+
+            }
+        });
+    </script>
 </body>
 
 </html>

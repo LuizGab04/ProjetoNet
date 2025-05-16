@@ -27805,3 +27805,6 @@ div[data-collapse] + .kanban-item,
 }
 /*# sourceMappingURL=theme-rtl.css.map */
 
+.nenhum{
+    display: none;
+}
