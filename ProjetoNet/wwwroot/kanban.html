@@ -184,6 +184,7 @@
 
         document.addEventListener("DOMContentLoaded", async () => {
             const cadastrarSprint = document.getElementById("cadastrarSprint");
+            const excluirSprint = document.getElementById("excluirSprint")
 
             cadastrarSprint.onclick = async () => {
                 const nome = document.getElementById("nomeSprint").value
@@ -220,9 +221,35 @@
                 }
             };
 
-            excluirSprint.onclick = async () => {
+            document.addEventListener("click", async (e) => {
+                // Verifica se clicou num botão com classe "btnRemoverSprint"
+                if (e.target.classList.contains("btnRemoverSprint")) {
+                    const sprintDiv = e.target.closest(".kanban-container > div[data-id]");
+                    const idSprint = sprintDiv?.getAttribute("data-id");
 
-            }
+                    if (!idSprint) return;
+
+                    const confirmacao = await Swal.fire({
+                        title: "Tem certeza?",
+                        text: "Essa ação não poderá ser desfeita!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Sim, excluir",
+                        cancelButtonText: "Cancelar"
+                    });
+
+                    if (confirmacao.isConfirmed) {
+                        const resposta = await Sprint.excluirSprint(idSprint);
+
+                        if (resposta.ok) {
+                            // Remove do DOM
+                            Swal.fire("Sprint excluída com sucesso!", "", "success");
+                        } else {
+                            Swal.fire("Erro ao excluir", "", "error");
+                        }
+                    }
+                }
+            });
         });
     </script>
 </body>

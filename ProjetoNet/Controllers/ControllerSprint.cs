@@ -43,7 +43,7 @@ namespace ProjetoNet.Controllers
             }
         }
 
-        [HttpPost("excluirSprint")]
+        [HttpDelete("excluirSprint")]
         public async Task<ActionResult> ExcluirSprint(int id_sprint)
         {
             try

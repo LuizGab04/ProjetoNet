@@ -17,7 +17,7 @@
     static carregarSprint(sprint) {
         const container = document.getElementById("kanbanGridContainer"); // onde o HTML será injetado
         container.innerHTML += `
-        <div class="kanban-container scrollbar me-n3 shadow pt-4">
+        <div class="kanban-container scrollbar me-n3 shadow pt-4" data-id="${sprint.id_sprint}">
             <div class="px-3 d-flex">
                 <div id="nomeSprintCadastrada">
                     <p>${sprint.nome_sprint}</p>
@@ -27,7 +27,7 @@
                         <a<i class="bi bi-three-dots-vertical"></i></a>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end py-0">
-                        <button id="excluirSprint" class="dropdown-item text-danger">Remove</button>
+                        <button id="excluirSprint" class="dropdown-item text-danger btnRemoverSprint">Remove</button>
                     </div>
                 </div>
             </div>
@@ -77,13 +77,17 @@
 
     }
 
-    static async excluirSprint() {
-        let response = await fetch(`${this.appUrl}/excluirSprint`, {
+    static async excluirSprint(idSprint) {
+        const token = localStorage.getItem("token");
+
+        const response = await fetch(`${this.appUrl}/excluirSprint`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(sprint),
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
         });
 
-        return response.json()
+        return response
+        console.log(response);
     }
 }
