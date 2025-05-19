@@ -224,7 +224,7 @@
             document.addEventListener("click", async (e) => {
                 // Verifica se clicou num botão com classe "btnRemoverSprint"
                 if (e.target.classList.contains("btnRemoverSprint")) {
-                    const sprintDiv = e.target.closest(".kanban-container > div[data-id]");
+                    const sprintDiv = e.target.closest(".kanban-container");
                     const idSprint = sprintDiv?.getAttribute("data-id");
 
                     if (!idSprint) return;
@@ -242,12 +242,50 @@
                         const resposta = await Sprint.excluirSprint(idSprint);
 
                         if (resposta.ok) {
-                            // Remove do DOM
+                            sprintDiv.remove()// Remove do DOM
                             Swal.fire("Sprint excluída com sucesso!", "", "success");
                         } else {
                             Swal.fire("Erro ao excluir", "", "error");
                         }
                     }
+                }
+            });
+            document.addEventListener("click", (event) => {
+                // Mostrar o formulário ao clicar em "Add another card"
+                if (event.target.closest(".btn-add-card")) {
+                    const coluna = event.target.closest(".kanban-column");
+                    const formulario = coluna.querySelector(".add-card-form");
+                    formulario.style.display = "block";
+                }
+
+                // Ocultar o formulário ao clicar em "Cancel"
+                if (event.target.dataset.btnForm === "hide") {
+                    const formulario = event.target.closest(".add-card-form");
+                    formulario.style.display = "none";
+                }
+
+                // Adicionar o card ao clicar em "Add card"
+                if (event.target.dataset.btnForm === "add") {
+                    const formulario = event.target.closest(".add-card-form");
+                    const input = formulario.querySelector("input");
+                    const valor = input.value;
+                    if (!valor) {
+                        Swal.fire({
+                            title: "Preencha os campos vazios",
+                            icon: "warning"
+                        });
+                        return;
+                    }
+                    const card = document.createElement("div");
+                    card.className = "kanban-card";
+                    card.innerHTML = `
+                        <div class="card-body">
+                            <p>${valor}</p>
+                            <button class="btn btn-danger btn-sm btnRemoverCard">Remover</button>
+                        </div>
+                    `;
+                    formulario.parentNode.insertBefore(card, formulario);
+                    input.value = ""; // Limpa o campo de entrada
                 }
             });
         });

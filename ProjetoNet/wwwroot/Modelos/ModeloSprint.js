@@ -43,11 +43,11 @@
         return `
         <div class="kanban-column">
             <div class="kanban-column-header">
-                <h5 class="fs-0 mb-0">${titulo} <span class="text-500" style="background-color: red">Adicionar NUMERO de cards</span></h5>
+                <h5 class="fs-0 mb-0">${titulo} <span class="text-500">(0)</span></h5>
             </div>
             <div class="kanban-items-container scrollbar">
                 <form class="add-card-form mt-3">
-                    <textarea class="form-control" data-input="add-card" rows="2" placeholder="Enter a title for this card..."></textarea>
+                    <textarea class="form-control" data-input="add-card" rows="2" placeholder="Insira um nome do Card"></textarea>
                     <div class="row gx-2 mt-2">
                         <div class="col">
                             <button class="btn btn-primary btn-sm d-block w-100" type="button">Add</button>
@@ -80,8 +80,8 @@
     static async excluirSprint(idSprint) {
         const token = localStorage.getItem("token");
 
-        const response = await fetch(`${this.appUrl}/excluirSprint`, {
-            method: "POST",
+        const response = await fetch(`${this.appUrl}/${idSprint}`, {
+            method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${token}`
             }

@@ -9,7 +9,6 @@ namespace ProjetoNet.Repositories
     {
         private readonly DbConexaoFactory _dbConexaoFactory;
         public SprintRepository(DbConexaoFactory dbConexaoFactory) => _dbConexaoFactory = dbConexaoFactory;
-        private string? SQL;
 
         public async Task<int> AdicionarSprint(Sprint sprint)
         {
