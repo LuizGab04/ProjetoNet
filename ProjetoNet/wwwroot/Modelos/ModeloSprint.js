@@ -1,6 +1,7 @@
 ﻿export class Sprint {
     nome_sprint
     id_sprint
+   
 
     static appUrl = "http://localhost:5176/api/sprint"
 
@@ -45,15 +46,15 @@
             <div class="kanban-column-header">
                 <h5 class="fs-0 mb-0">${titulo} <span class="text-500">(0)</span></h5>
             </div>
-            <div class="kanban-items-container scrollbar">
+            <div id="kanbanItemContainer" class="kanban-items-container scrollbar" tabindex="">
                 <form class="add-card-form mt-3">
-                    <textarea class="form-control" data-input="add-card" rows="2" placeholder="Insira um nome do Card"></textarea>
+                    <textarea class="form-control input-nome-card" rows="2" placeholder="Insira um nome do Card"></textarea>
                     <div class="row gx-2 mt-2">
                         <div class="col">
-                            <button class="btn btn-primary btn-sm d-block w-100" type="button">Add</button>
+                            <button class="btn btn-primary btn-sm d-block w-100 btCadastrarCard" type="button">Adicionar</button>
                         </div>
                         <div class="col">
-                            <button class="btn btn-outline-secondary btn-sm d-block w-100 border-400" type="button" data-btn-form="hide">Cancel</button>
+                            <button class="btn btn-outline-secondary btn-sm d-block w-100 border-400" type="button" data-btn-form="hide">Cancelar</button>
                         </div>
                     </div>
                 </form>

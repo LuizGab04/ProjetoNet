@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Dapper;
+﻿using Dapper;
 using ProjetoNet.Models;
 using ProjetoNet.Repositories.Interfaces;
 
@@ -35,5 +34,7 @@ namespace ProjetoNet.Repositories
 
             return await conexao.ExecuteAsync(sql, new { id_sprint });
         }
+
+        
     }
 }

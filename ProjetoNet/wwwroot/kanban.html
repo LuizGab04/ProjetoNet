@@ -113,7 +113,7 @@
                     </div>
                 </div>
                 <div id="kanbanGridContainer" class="kanban-container ">
-                    
+
                 </div>
             </div>
         </div>
@@ -158,7 +158,8 @@
     <script type="module">
         import { Usuario } from "../Modelos/ModeloUsuario.js"
         import { Sprint } from "../Modelos/ModeloSprint.js"
-        
+        import { Card } from "../Modelos/ModeloCard.js"
+
         window.addEventListener("DOMContentLoaded", async () => {
             await Sprint.carregarTodasAsSprints()
             await Usuario.pegarFoto()
@@ -250,7 +251,7 @@
                     }
                 }
             });
-            document.addEventListener("click", (event) => {
+            document.addEventListener("click", async (event) => {
                 // Mostrar o formulário ao clicar em "Add another card"
                 if (event.target.closest(".btn-add-card")) {
                     const coluna = event.target.closest(".kanban-column");
@@ -265,27 +266,28 @@
                 }
 
                 // Adicionar o card ao clicar em "Add card"
-                if (event.target.dataset.btnForm === "add") {
-                    const formulario = event.target.closest(".add-card-form");
-                    const input = formulario.querySelector("input");
-                    const valor = input.value;
-                    if (!valor) {
+                if (event.target.classList.contains("btCadastrarCard")) {
+                    const coluna = event.target.closest(".kanban-column");
+                    const sprintDiv = event.target.closest(".kanban-container");
+                    const id_sprint = sprintDiv?.getAttribute("data-id");
+                    const nomeCard = coluna.querySelector(".input-nome-card").value;
+
+                    if (!nomeCard) {
                         Swal.fire({
-                            title: "Preencha os campos vazios",
+                            title: "Preencha o nome do card",
                             icon: "warning"
                         });
                         return;
                     }
-                    const card = document.createElement("div");
-                    card.className = "kanban-card";
-                    card.innerHTML = `
-                        <div class="card-body">
-                            <p>${valor}</p>
-                            <button class="btn btn-danger btn-sm btnRemoverCard">Remover</button>
-                        </div>
-                    `;
-                    formulario.parentNode.insertBefore(card, formulario);
-                    input.value = ""; // Limpa o campo de entrada
+
+                    const card = {
+                        sprint_responsavel: id_sprint,
+                        nome_card: nomeCard
+                    };
+
+                    console.log(card)
+
+                    const resposta = await Card.cadastrarCard(card);
                 }
             });
         });

@@ -4,6 +4,6 @@ namespace ProjetoNet.Repositories.Interfaces
 {
     public interface ICard
     {
-        Task<int> CriarCard(Card card);
+        Task<int> AdicionarCards(Card card);
     }
 }

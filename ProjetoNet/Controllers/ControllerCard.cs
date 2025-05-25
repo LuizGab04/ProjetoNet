@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProjetoNet.Models;
+using ProjetoNet.Repositories;
 using ProjetoNet.Repositories.Interfaces;
 
 namespace ProjetoNet.Controllers
@@ -11,24 +11,24 @@ namespace ProjetoNet.Controllers
     public class ControllerCard : ControllerBase
     {
         private readonly ICard _CardRepository;
-        
+
         public ControllerCard(ICard CardRepository)
         {
             _CardRepository = CardRepository;
         }
 
-        [HttpPost]
-        public async Task<> AdicionarCard([FromBody] Card card)
+        [HttpPost("criarCard")]
+        public async Task<ActionResult<int>> AdicionarCard([FromBody] Card card)
         {
             try
             {
-                return Ok(await _CardRepository.CriarCard(card));
+                 return Ok(await _CardRepository.AdicionarCards(card));
             }
             catch (Exception ex)
             {
-                return BadRequest(new { mensagem = "Erro ao criar a sprint", erro = ex.Message });
+                return BadRequest(new { mensagem = "Erro ao cadastrar o card", erro = ex.Message });
+
             }
         }
-
     }
 }
