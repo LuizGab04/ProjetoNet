@@ -18,7 +18,7 @@
     static carregarSprint(sprint) {
         const container = document.getElementById("kanbanGridContainer"); // onde o HTML será injetado
         container.innerHTML += `
-        <div class="kanban-container borderSprint scrollbar me-n3 pt-4" data-id="${sprint.id_sprint}">
+        <div id="sprint-${sprint.id_sprint} "class="kanban-container borderSprint scrollbar me-n3 pt-4" data-id="${sprint.id_sprint}">
             <div class="px-3 d-flex">
                 <div id="nomeSprintCadastrada">
                     <p>${sprint.nome_sprint}</p>

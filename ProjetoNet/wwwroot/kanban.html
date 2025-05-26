@@ -161,6 +161,7 @@
         import { Card } from "../Modelos/ModeloCard.js"
 
         window.addEventListener("DOMContentLoaded", async () => {
+            await Card.mostrarCards()
             await Sprint.carregarTodasAsSprints()
             await Usuario.pegarFoto()
             const token = localStorage.getItem("token");

@@ -30,5 +30,18 @@ namespace ProjetoNet.Controllers
 
             }
         }
+
+        [HttpGet("mostrarCards/{sprint_responsavel}")]
+        public async Task<ActionResult> MostrarCards(int sprint_responsavel)
+        {
+            try
+            {
+                return Ok(await _CardRepository.MostrarCards(sprint_responsavel));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = "Erro ao mostrar o card", erro = ex.Message });
+            }
+        }
     }
 }
