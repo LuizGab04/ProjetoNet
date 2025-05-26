@@ -1,31 +1,23 @@
-name: CI Pipeline
+name: Build and Test
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v3
-
-      - name: Configurar .NET
-        uses: actions/setup-dotnet@v3
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '8.0'
-
-      - name: Restaurar dependências
+      - name: Restore dependencies
         run: dotnet restore
-
-      - name: Compilar o projeto
+      - name: Build
         run: dotnet build --configuration Release
-
-      - name: Rodar os testes
-        run: dotnet test --configuration Release --no-build --verbosity normal
+      - name: Test
+        run: dotnet test --configuration Release
