@@ -52,7 +52,7 @@ namespace ProjetoNet.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { mensagem = "Erro ao mostrar a sprint", erro = ex.Message });
+                return BadRequest(new { mensagem = "Erro ao exluir a sprint", erro = ex.Message });
             }
         }
     }

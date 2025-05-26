@@ -137,6 +137,14 @@
                     });
                 }
 
+                if (senha != confirmarSenha) {
+                    Swal.fire({
+                        title: "Senhas não são iguais",
+                        icon: "warning"
+                    });
+                    return;
+                }
+
                 const usuario = {
                     nome_usuario: nome,
                     email_usuario: email,
@@ -199,7 +207,6 @@
                 });
             }
         }
-
     </script>
 </body>
 </html>
