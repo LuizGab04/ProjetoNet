@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjetoNet.Models;
-using ProjetoNet.Repositories;
 using ProjetoNet.Repositories.Interfaces;
 
 namespace ProjetoNet.Controllers
@@ -22,21 +21,20 @@ namespace ProjetoNet.Controllers
         {
             try
             {
-                 return Ok(await _CardRepository.AdicionarCards(card));
+                return Ok(await _CardRepository.AdicionarCards(card));
             }
             catch (Exception ex)
             {
                 return BadRequest(new { mensagem = "Erro ao cadastrar o card", erro = ex.Message });
-
             }
         }
 
-        [HttpGet("mostrarCards/{sprint_responsavel}")]
-        public async Task<ActionResult> MostrarCards(int sprint_responsavel)
+        [HttpGet("{id_sprint}")]
+        public async Task<ActionResult> MostrarCards(int id_sprint)
         {
             try
             {
-                return Ok(await _CardRepository.MostrarCards(sprint_responsavel));
+                return Ok(await _CardRepository.MostrarCards(id_sprint));
             }
             catch (Exception ex)
             {

@@ -18,11 +18,7 @@
     <!-- ===============================================-->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicons/favicon-16x16.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicons/favicon.ico">
-    <meta name="msapplication-TileImage" content="../assets/img/favicons/mstile-150x150.png">
+
     <meta name="theme-color" content="#ffffff">
     <script src="../assets/js/config.js"></script>
     <script src="../vendors/overlayscrollbars/OverlayScrollbars.min.js"></script>
@@ -150,8 +146,7 @@
     <script src="../vendors/anchorjs/anchor.min.js"></script>
     <script src="../vendors/is/is.min.js"></script>
     <script src="../vendors/glightbox/glightbox.min.js"></script>
-    <script src="../vendors/draggable/draggable.bundle.legacy.js"></script>
-    <script src="../vendors/fontawesome/all.min.js"></script>
+    <script src="../src/js/draggable.bundle.legacy.js"></script>
     <script src="../vendors/lodash/lodash.min.js"></script>
     <script src="../vendors/list.js/list.min.js"></script>
     <script src="../assets/js/theme.js"></script>
@@ -161,14 +156,19 @@
         import { Card } from "../Modelos/ModeloCard.js"
 
         window.addEventListener("DOMContentLoaded", async () => {
-            await Card.mostrarCards()
-            await Sprint.carregarTodasAsSprints()
             await Usuario.pegarFoto()
             const token = localStorage.getItem("token");
             const nome = localStorage.getItem("nome_usuario")
             document.getElementById("nomeUsuario").innerHTML = `<p>Olá, ${nome}!</p>`
             if (!token) {
                 window.location.href = "login.html";
+                return
+            }
+
+            const sprints = await Sprint.carregarTodasAsSprints()
+           
+            for (const sprint of sprints) {
+                await Card.mostrarCards(sprint.id_sprint); // Aqui o elemento DOM já existe
             }
         });
 
@@ -289,6 +289,7 @@
                     console.log(card)
 
                     const resposta = await Card.cadastrarCard(card);
+                    console.log(id_sprint)
                 }
             });
         });

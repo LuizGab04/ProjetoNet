@@ -15,10 +15,11 @@
         return response.json();
     }
 
-    static carregarSprint(sprint) {
+    //FUNÇÃO PARA CARREGAR AS SPRINTS NO HTML
+    static async carregarSprint(sprint) {
         const container = document.getElementById("kanbanGridContainer"); // onde o HTML será injetado
         container.innerHTML += `
-        <div id="sprint-${sprint.id_sprint} "class="kanban-container borderSprint scrollbar me-n3 pt-4" data-id="${sprint.id_sprint}">
+        <div id="sprint-${sprint.id_sprint}" class="kanban-container borderSprint scrollbar me-n3 pt-4" data-id="${sprint.id_sprint}">
             <div class="px-3 d-flex">
                 <div id="nomeSprintCadastrada">
                     <p>${sprint.nome_sprint}</p>
@@ -72,9 +73,11 @@
         const response = await fetch("http://localhost:5176/api/sprint/mostrarSprints"); // endpoint que retorna TODAS as sprints
         const sprints = await response.json();
 
-        sprints.forEach(sprint => {
-            Sprint.carregarSprint(sprint); // carrega cada uma individualmente
-        });
+        for (const sprint of sprints) {
+        await Sprint.carregarSprint(sprint);
+    }
+
+    return sprints;
 
     }
 

@@ -17,12 +17,12 @@ namespace ProjetoNet.Repositories
             return await conexao.ExecuteAsync(sql, new { card });
         }
 
-        public async Task<IEnumerable<Card>> MostrarCards(int sprint_responsavel)
+        public async Task<IEnumerable<Card>> MostrarCards(int id_sprint)
         {
             using var conexao = _dbConexaoFactory.CreateConnection();
-            string sql = $"SELECT * FROM Card WHERE {sprint_responsavel};";
+            string sql = $"SELECT * FROM Card WHERE sprint_responsavel = {id_sprint};";
 
-            return await conexao.QueryAsync<Card>(sql, new { sprint_responsavel });
+            return await conexao.QueryAsync<Card>(sql);
         }
     }
 }

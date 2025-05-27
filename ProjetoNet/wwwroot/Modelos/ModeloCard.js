@@ -19,7 +19,7 @@
     }
 
     static cardGrid(card) {
-        const sprintContainer = document.querySelector(`#sprint-${card.sprint_responsavel} .kanbanItemContainer`);
+        const sprintContainer = document.querySelector(`#sprint-${card.sprint_responsavel} .kanban-items-container`);
 
         if (!sprintContainer) {
             console.warn(`Sprint ${card.sprint_responsavel} não encontrada no DOM.`);
@@ -28,7 +28,7 @@
 
         const cardHtml = `
         <div class="kanban-item" tabindex="0">
-            <div class="card kanban-item-card hover-actions-trigger">
+            <div class="card kanban-item-card hover-actions-trigg8uer">
                 <div class="card-body">
                     <div class="position-relative">
                         <div class="dropdown font-sans-serif">
@@ -55,14 +55,12 @@
         sprintContainer.innerHTML += cardHtml;
     }
 
-    static async mostrarCards() {
-        const resposta = await fetch("http://localhost:5176/api/card/listarCards"); // ou seu endpoint
+    static async mostrarCards(id_sprint) {
+        const resposta = await fetch(`${this.appUrl}/${id_sprint}`); // ou seu endpoint
         const cards = await resposta.json();
 
         cards.forEach(card => {
             Card.cardGrid(card);
         });
-        
-    console.log(card)
     }
 }
