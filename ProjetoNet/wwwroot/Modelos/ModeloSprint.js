@@ -47,7 +47,7 @@
             <div class="kanban-column-header">
                 <h5 class="fs-0 mb-0">${titulo} <span class="text-500">(0)</span></h5>
             </div>
-            <div id="kanbanItemContainer" class="kanban-items-container scrollbar" tabindex="">
+            <div id="kanbanItemContainer" class="kanban-items-container scrollbar">
                 <form class="add-card-form mt-3">
                     <textarea class="form-control input-nome-card" rows="2" placeholder="Insira um nome do Card"></textarea>
                     <div class="row gx-2 mt-2">

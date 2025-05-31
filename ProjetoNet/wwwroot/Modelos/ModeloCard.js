@@ -27,8 +27,8 @@
         }
 
         const cardHtml = `
-        <div class="kanban-item" tabindex="0">
-            <div class="card kanban-item-card hover-actions-trigg8uer">
+        <div class="kanban-item">
+            <div class="card kanban-item-card hover-actions-trir">
                 <div class="card-body">
                     <div class="position-relative">
                         <div class="dropdown font-sans-serif">
@@ -53,7 +53,10 @@
     `;
 
         sprintContainer.innerHTML += cardHtml;
+        draggableInit();
     }
+
+
 
     static async mostrarCards(id_sprint) {
         const resposta = await fetch(`${this.appUrl}/${id_sprint}`); // ou seu endpoint
@@ -62,5 +65,7 @@
         cards.forEach(card => {
             Card.cardGrid(card);
         });
+        document.querySelectorAll('.kanban-item').forEach(el => console.log(el.draggable));
+
     }
 }

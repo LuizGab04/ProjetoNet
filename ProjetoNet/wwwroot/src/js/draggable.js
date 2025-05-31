@@ -2,7 +2,7 @@
 /*                                  Draggable                                 */
 /* -------------------------------------------------------------------------- */
 
-import utils from '../js/utils.js';
+import utils from './utils.js';
 
 const draggableInit = () => {
   const Selectors = {
