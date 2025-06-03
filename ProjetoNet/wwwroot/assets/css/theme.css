@@ -426,7 +426,7 @@
   --falcon-pagination-active-border-color: #2c7be5;
   --falcon-pagination-disabled-bg: #fff;
   /* ---------------------------------- Card ---------------------------------- */
-  --falcon-card-border-color: rgba(0, 0, 0, 0.125);
+  --falcon-card-border-color: #e63757;
   --falcon-card-cap-bg: rgba(0, 0, 0, 0);
   --falcon-card-cap-color: null;
   --falcon-card-color: null;
@@ -6249,7 +6249,7 @@ textarea.form-control-lg {
   word-wrap: break-word;
   background-color: var(--falcon-card-bg);
   background-clip: border-box;
-  border: 0px solid var(--falcon-card-border-color);
+  border: 1px solid var(--falcon-card-border-color);
   border-radius: 0.375rem;
 }
 .card > hr {

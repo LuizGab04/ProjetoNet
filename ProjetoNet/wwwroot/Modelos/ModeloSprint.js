@@ -19,7 +19,7 @@
     static async carregarSprint(sprint) {
         const container = document.getElementById("kanbanGridContainer"); // onde o HTML será injetado
         container.innerHTML += `
-        <div id="sprint-${sprint.id_sprint}" class="kanban-container borderSprint scrollbar me-n3 pt-4" data-id="${sprint.id_sprint}">
+        <div id="sprint-${sprint.id_sprint}" class="kanban-container scrollbar me-n3" data-id="${sprint.id_sprint}">
             <div class="px-3 d-flex">
                 <div id="nomeSprintCadastrada">
                     <p>${sprint.nome_sprint}</p>
@@ -33,21 +33,21 @@
                     </div>
                 </div>
             </div>
-            ${this.criarColuna("Backlog do Produto")}
-            ${this.criarColuna("Fazendo")}
-            ${this.criarColuna("Esperando Teste")}
-            ${this.criarColuna("Em Teste")}
-            ${this.criarColuna("Concluído")}
+            ${this.criarColuna("Backlog do Produto",0)}
+            ${this.criarColuna("Fazendo",1)}
+            ${this.criarColuna("Esperando Teste",2)}
+            ${this.criarColuna("Em Teste",3)}
+            ${this.criarColuna("Concluído",4)}
         </div>
     `;
     }
-    static criarColuna(titulo) {
+    static criarColuna(titulo, index) {
         return `
-        <div class="kanban-column">
+        <div class="kanban-column form-added" column-index="${index}">
             <div class="kanban-column-header">
                 <h5 class="fs-0 mb-0">${titulo} <span class="text-500">(0)</span></h5>
             </div>
-            <div id="kanbanItemContainer" class="kanban-items-container scrollbar">
+            <div class="kanban-items-container scrollbar" data-sortable="data-sortable">
                 <form class="add-card-form mt-3">
                     <textarea class="form-control input-nome-card" rows="2" placeholder="Insira um nome do Card"></textarea>
                     <div class="row gx-2 mt-2">
@@ -84,8 +84,8 @@
     static async excluirSprint(idSprint) {
         const token = localStorage.getItem("token");
 
-        const response = await fetch(`${this.appUrl}/${idSprint}`, {
-            method: "DELETE",
+        const response = await fetch(`${this.appUrl}/delete/${idSprint}`, {
+            method: "post",
             headers: {
                 "Authorization": `Bearer ${token}`
             }

@@ -7,14 +7,9 @@ namespace ProjetoNet.Controllers
 
     [Route("api/card")]
     [ApiController]
-    public class ControllerCard : ControllerBase
+    public class ControllerCard(ICard CardRepository) : ControllerBase
     {
-        private readonly ICard _CardRepository;
-
-        public ControllerCard(ICard CardRepository)
-        {
-            _CardRepository = CardRepository;
-        }
+        private readonly ICard _CardRepository = CardRepository ?? throw new ArgumentNullException(nameof(CardRepository));
 
         [HttpPost("criarCard")]
         public async Task<ActionResult<int>> AdicionarCard([FromBody] Card card)

@@ -55,6 +55,10 @@
         #nomeUsuario {
             padding-top: 11px;
         }
+
+        .kanban-items-container{
+            min-height: 100px;
+        }
     </style>
 </head>
 
@@ -108,7 +112,7 @@
                         <button class="btn btn-sm btn-falcon-default me-2 d-none d-md-block" data-bs-toggle="modal" data-bs-target="#modalSprint"><span class="fas fa-plus me-2"></span>Adicionar Sprint</button>
                     </div>
                 </div>
-                <div id="kanbanGridContainer" class="kanban-container ">
+                <div id="kanbanGridContainer">
 
                 </div>
             </div>
@@ -157,7 +161,9 @@
         import { Sprint } from "../Modelos/ModeloSprint.js"
         import { Card } from "../Modelos/ModeloCard.js"
 
-        window.addEventListener("DOMContentLoaded", async () => {
+
+        const loadPage = async () => {
+            // Parte 1
             await Usuario.pegarFoto()
             const token = localStorage.getItem("token");
             const nome = localStorage.getItem("nome_usuario")
@@ -170,23 +176,12 @@
             const sprints = await Sprint.carregarTodasAsSprints()
 
             for (const sprint of sprints) {
-                await Card.mostrarCards(sprint.id_sprint); // Aqui o elemento DOM já existe
+                await Card.mostrarCards(sprint.id_sprint)
             }
-        });
 
-        deslogar.onclick = () => {
-            localStorage.removeItem("token")
-            localStorage.removeItem("nome_usuario")
-            localStorage.removeItem("foto_perfil")
-            window.location.href = "login.html"
-        }
-
-        configuracao.onclick = () => {
-            window.location.href = "configuracao.html"
-        }
-
-
-        document.addEventListener("DOMContentLoaded", async () => {
+            draggableInit()
+            
+            // Parte 2
             const cadastrarSprint = document.getElementById("cadastrarSprint");
             const excluirSprint = document.getElementById("excluirSprint")
 
@@ -225,7 +220,8 @@
                 }
             };
 
-            document.addEventListener("click", async (e) => {
+            document.addEventListener("click", async (event) => {
+                const e = event
                 // Verifica se clicou num botão com classe "btnRemoverSprint"
                 if (e.target.classList.contains("btnRemoverSprint")) {
                     const sprintDiv = e.target.closest(".kanban-container");
@@ -253,8 +249,7 @@
                         }
                     }
                 }
-            });
-            document.addEventListener("click", async (event) => {
+
                 // Mostrar o formulário ao clicar em "Add another card"
                 if (event.target.closest(".btn-add-card")) {
                     const coluna = event.target.closest(".kanban-column");
@@ -294,7 +289,19 @@
                     console.log(id_sprint)
                 }
             });
-        });
+
+            deslogar.onclick = () => {
+                localStorage.removeItem("token")
+                localStorage.removeItem("nome_usuario")
+                localStorage.removeItem("foto_perfil")
+                window.location.href = "login.html"
+            }
+            configuracao.onclick = () => {
+                window.location.href = "configuracao.html"
+            }
+        }
+
+        await loadPage()
     </script>
 </body>
 
