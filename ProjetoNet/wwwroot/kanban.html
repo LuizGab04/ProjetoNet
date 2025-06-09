@@ -311,20 +311,49 @@
                 }
             });
 
-            document.addEventListener('dragend', async (event) => {
-                const cardElement = event.target.closest('.kanban-item');
-                const id_card = cardElement.dataset.idCard; // use data-id-card no HTML do card
-                const novaColuna = parseInt(cardElement.closest('.kanban-column').getAttribute('column-index'));
-                const id_sprint = parseInt(cardElement.closest('.sprint-container').id.replace('sprint-', ''));
+            function draggableInit() {
+                const sortable = new Draggable.Sortable(
+                    document.querySelectorAll('.kanban-items-container'),
+                    {
+                        draggable: '.kanban-item'
+                    }
+                );
 
-                const cardAtualizado = {
-                    id_card: id_card,
-                    sprint_responsavel: id_sprint,
-                    coluna_responsavel: novaColuna
-                };
+                sortable.on('sortable:stop', function (evt) {
+                    const el = evt.data.dragEvent.source;
+                    const columnContainer = el.closest('.kanban-items-container');
+                    const form = columnContainer.querySelector('.add-card-form');
 
-                await Card.atualizarCard(cardAtualizado);
-            });
+                    if (form && !el.nextElementSibling) {
+                        columnContainer.appendChild(form);
+                    }
+                });
+
+                sortable.on('sortable:sorted', async function (evt) {
+                    const el = evt.data.dragEvent.source;
+                    const columnContainer = evt.data.newContainer.closest('.kanban-column');
+                    const novaColuna = parseInt(columnContainer.getAttribute('column-index'));
+                    const id_sprint = parseInt(columnContainer.closest('.kanban-container').getAttribute('data-id'));
+                    const id_card = el.dataset.id;
+                    const wrapper = el.closest('.sortable-item-wrapper');
+                    const nomeCardElement = wrapper ? wrapper.querySelector('.nome-card') : null;
+                    const nomeCard = nomeCardElement ? nomeCardElement.textContent.trim() : null;
+
+
+
+                    console.log("Nome do card:", nomeCard);
+
+                    const cardAtualizado = {
+                        nome_card: nomeCard,
+                        id_card: id_card,
+                        sprint_responsavel: id_sprint,
+                        coluna_responsavel: novaColuna
+                    };
+
+                    console.log("Card atualizado via Sortable:", cardAtualizado);
+                    await Card.atualizarCard(cardAtualizado);
+                });
+            }
 
             deslogar.onclick = () => {
                 localStorage.removeItem("token")

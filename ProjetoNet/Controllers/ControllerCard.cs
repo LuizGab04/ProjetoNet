@@ -23,7 +23,7 @@ namespace ProjetoNet.Controllers
                 return BadRequest(new { mensagem = "Erro ao cadastrar o card", erro = ex.Message });
             }
         }
-        [HttpPut("atualizarCard")]
+        [HttpPost("atualizarCard")]
         public async Task<ActionResult> AtualizarCard([FromBody] Card card)
         {
             try

@@ -20,14 +20,16 @@
 
     static async atualizarCard(card) {
         const resposta = await fetch(`${this.appUrl}/atualizarCard`, {
-            method: "PUT",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(card)
         });
 
-        return await resposta.json();
+        console.log(resposta)
+        return;
+        
     }
 
     static async excluirCard(id_card) {
@@ -63,7 +65,7 @@
                 // Filtra os cards da coluna atual
                 const array = cards.filter(card => card.coluna_responsavel === cont);
                 const htmlCards = array.map(card => `
-                <div class="kanban-item sortable-item-wrapper">
+                <div class="kanban-item sortable-item-wrapper" data-id="${card.id_card}">
                     <div class="card sortable-item kanban-item-card hover-actions-trigger">
                         <div class="card-body">
                             <div class="position-relative">
@@ -71,12 +73,9 @@
                                     <button class="btn btn-sm btn-falcon-default kanban-item-dropdown-btn hover-actions" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-ellipsis-h"></i>
                                     </button>
-                                    <div class="dropdown-menu dropdown-menu-end py-0">
-                                        <a class="dropdown-item text-danger" href="#!">Excluir</a>
-                                    </div>
                                 </div>
                             </div>
-                            <p class="mb-0 fw-medium font-sans-serif stretched-link">
+                            <p class="mb-0 nome-card fw-medium font-sans-serif stretched-link">
                                 ${card.nome_card}
                             </p>
                         </div>
