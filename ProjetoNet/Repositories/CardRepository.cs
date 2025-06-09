@@ -16,7 +16,17 @@ namespace ProjetoNet.Repositories
 
             return await conexao.ExecuteAsync(sql, new { card });
         }
+        public async Task AtualizarCard(Card card)
+        {
+            using var conexao = _dbConexaoFactory.CreateConnection();
+            string sql = @"UPDATE Card 
+                   SET nome_card = @nome_card, 
+                       sprint_responsavel = @sprint_responsavel, 
+                       coluna_responsavel = @coluna_responsavel
+                   WHERE id_card = @id_card;";
 
+            await conexao.ExecuteAsync(sql, card);
+        }
         public async Task<IEnumerable<Card>> MostrarCards(int id_sprint)
         {
             using var conexao = _dbConexaoFactory.CreateConnection();

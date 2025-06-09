@@ -311,6 +311,21 @@
                 }
             });
 
+            document.addEventListener('dragend', async (event) => {
+                const cardElement = event.target.closest('.kanban-item');
+                const id_card = cardElement.dataset.idCard; // use data-id-card no HTML do card
+                const novaColuna = parseInt(cardElement.closest('.kanban-column').getAttribute('column-index'));
+                const id_sprint = parseInt(cardElement.closest('.sprint-container').id.replace('sprint-', ''));
+
+                const cardAtualizado = {
+                    id_card: id_card,
+                    sprint_responsavel: id_sprint,
+                    coluna_responsavel: novaColuna
+                };
+
+                await Card.atualizarCard(cardAtualizado);
+            });
+
             deslogar.onclick = () => {
                 localStorage.removeItem("token")
                 localStorage.removeItem("nome_usuario")

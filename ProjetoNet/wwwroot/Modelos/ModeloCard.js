@@ -18,6 +18,25 @@
         return await resposta.json();
     }
 
+    static async atualizarCard(card) {
+        const resposta = await fetch(`${this.appUrl}/atualizarCard`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(card)
+        });
+
+        return await resposta.json();
+    }
+
+    static async excluirCard(id_card) {
+        const resposta = await fetch(`${this.appUrl}/excluirCard/${id_card}`, {
+            method: "DELETE"
+        });
+        return await resposta.json();
+    }
+
     static async mostrarCards(id_sprint) {
         const resposta = await fetch(`${this.appUrl}/${id_sprint}`);
         const cards = await resposta.json();

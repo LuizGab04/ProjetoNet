@@ -7,14 +7,9 @@ namespace ProjetoNet.Controllers
 {
     [Route("api/sprint")]
     [ApiController]
-    public class ControllerSprint : ControllerBase
+    public class ControllerSprint(ISprint sprintRepository) : ControllerBase
     {
-        private readonly ISprint _sprintRepository;
-
-       public ControllerSprint(ISprint sprintRepository)
-        {
-            _sprintRepository = sprintRepository;
-        }
+        private readonly ISprint _sprintRepository = sprintRepository ?? throw new ArgumentNullException(nameof(sprintRepository));
 
         [HttpPost("criar")]
         public async Task<ActionResult<int>> CriarSprint([FromBody] Sprint sprint)

@@ -6,5 +6,6 @@ namespace ProjetoNet.Repositories.Interfaces
     {
         Task<int> AdicionarCards(Card card);
         Task<IEnumerable<Card>> MostrarCards(int id_sprint);
+        Task AtualizarCard(Card card);
     }
 }

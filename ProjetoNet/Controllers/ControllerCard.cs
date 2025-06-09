@@ -23,6 +23,20 @@ namespace ProjetoNet.Controllers
                 return BadRequest(new { mensagem = "Erro ao cadastrar o card", erro = ex.Message });
             }
         }
+        [HttpPut("atualizarCard")]
+        public async Task<ActionResult> AtualizarCard([FromBody] Card card)
+        {
+            try
+            {
+                await _CardRepository.AtualizarCard(card);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = "Erro ao atualizar o card", erro = ex.Message });
+            }
+        }
+
 
         [HttpGet("{id_sprint}")]
         public async Task<ActionResult> MostrarCards(int id_sprint)
