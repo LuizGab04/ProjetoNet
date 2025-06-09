@@ -1,7 +1,7 @@
 ﻿export class Sprint {
     nome_sprint
     id_sprint
-   
+
 
     static appUrl = "http://localhost:5176/api/sprint"
 
@@ -33,51 +33,62 @@
                     </div>
                 </div>
             </div>
-            ${this.criarColuna("Backlog do Produto",0)}
-            ${this.criarColuna("Fazendo",1)}
-            ${this.criarColuna("Esperando Teste",2)}
-            ${this.criarColuna("Em Teste",3)}
-            ${this.criarColuna("Concluído",4)}
+            ${this.criarColuna("Backlog do Produto", 0)}
+            ${this.criarColuna("Fazendo", 1)}
+            ${this.criarColuna("Esperando Teste", 2)}
+            ${this.criarColuna("Em Teste", 3)}
+            ${this.criarColuna("Concluído", 4)}
         </div>
     `;
     }
-    static criarColuna(titulo, index) {
-        return `
-        <div class="kanban-column form-added" column-index="${index}">
-            <div class="kanban-column-header">
-                <h5 class="fs-0 mb-0">${titulo} <span class="text-500">(0)</span></h5>
-            </div>
-            <div class="kanban-items-container scrollbar" data-sortable="data-sortable">
-                <form class="add-card-form mt-3">
-                    <textarea class="form-control input-nome-card" rows="2" placeholder="Insira um nome do Card"></textarea>
-                    <div class="row gx-2 mt-2">
-                        <div class="col">
-                            <button class="btn btn-primary btn-sm d-block w-100 btCadastrarCard" type="button">Adicionar</button>
-                        </div>
-                        <div class="col">
-                            <button class="btn btn-outline-secondary btn-sm d-block w-100 border-400" type="button" data-btn-form="hide">Cancelar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="kanban-column-footer">
-                <button class="btn btn-link btn-sm d-block w-100 btn-add-card text-decoration-none text-600" type="button">
-                    <span class="fas fa-plus me-2"></span>Add another card
-                </button>
-            </div>
+   static criarColuna(titulo, index) {
+    const mostrarColuna = titulo === "Backlog do Produto";
+
+    return `
+    <div class="kanban-column form-added" column-index="${index}">
+        <div class="kanban-column-header">
+            <h5 class="fs-0 mb-0">${titulo} <span class="text-500">(0)</span></h5>
         </div>
+
+        ${mostrarColuna ? `
+        <form class="add-card-form mt-3 d-none">
+            <textarea id="nomeCard2" class="form-control input-nome-card" rows="2" placeholder="Insira um nome do Card"></textarea>
+            <div class="row gx-2 mt-2">
+                <div class="col">
+                    <button class="btn btn-primary btn-sm d-block w-100 btCadastrarCard" type="button">Adicionar</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-secondary btn-sm d-block w-100 border-400" type="button" data-btn-form="hide">Cancelar</button>
+                </div>
+            </div>
+        </form>
+        ` : ""}
+
+        <div class="kanban-items-container scrollbar" data-sortable="data-sortable">
+            <!-- Cards serão injetados aqui -->
+        </div>
+
+        ${mostrarColuna ? `
+        <div class="kanban-column-footer">
+            <button class="btn btn-link btn-sm d-block w-100 btn-add-card text-decoration-none text-600" type="button">
+                <span class="fas fa-plus me-2"></span>adicionar outro card
+            </button>
+        </div>
+        ` : ""}
+    </div>
     `;
-    }
+}
+
 
     static async carregarTodasAsSprints() {
         const response = await fetch("http://localhost:5176/api/sprint/mostrarSprints"); // endpoint que retorna TODAS as sprints
         const sprints = await response.json();
 
         for (const sprint of sprints) {
-        await Sprint.carregarSprint(sprint);
-    }
+            await Sprint.carregarSprint(sprint);
+        }
 
-    return sprints;
+        return sprints;
 
     }
 

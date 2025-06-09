@@ -19,21 +19,32 @@
     }
 
     static async mostrarCards(id_sprint) {
-        const resposta = await fetch(`${this.appUrl}/${id_sprint}`); // ou seu endpoint
+        const resposta = await fetch(`${this.appUrl}/${id_sprint}`);
         const cards = await resposta.json();
 
-        if (cards.length === 0) {
-            console.log('Nao há cards')
-            return
+        if (!cards || cards.length === 0) {
+            console.log(`Não há cards para a sprint ${id_sprint}`);
+           
+            for (let cont = 0; cont < 5; cont++) {
+                const sprintContainer = document.querySelector(
+                    `#sprint-${id_sprint} .kanban-column[column-index="${cont}"] .kanban-items-container`
+                );
+                if (sprintContainer) sprintContainer.innerHTML = "";
+            }
+            return;
         }
 
+        
         for (let cont = 0; cont < 5; cont++) {
-            const sprintContainer = document.querySelector(`#sprint-${cards[0].sprint_responsavel} .kanban-column[column-index="${cont}"] .kanban-items-container`);
+            const sprintContainer = document.querySelector(
+                `#sprint-${id_sprint} .kanban-column[column-index="${cont}"] .kanban-items-container`
+            );
 
             if (sprintContainer) {
-                const array = cards.filter(x => x.coluna_responsavel === cont)
-                const htmlCards = array.map(card => {
-                    return `<div class="kanban-item sortable-item-wrapper">
+                // Filtra os cards da coluna atual
+                const array = cards.filter(card => card.coluna_responsavel === cont);
+                const htmlCards = array.map(card => `
+                <div class="kanban-item sortable-item-wrapper">
                     <div class="card sortable-item kanban-item-card hover-actions-trigger">
                         <div class="card-body">
                             <div class="position-relative">
@@ -42,11 +53,7 @@
                                         <i class="fas fa-ellipsis-h"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end py-0">
-                                        <a class="dropdown-item" href="#!">Add Card</a>
-                                        <a class="dropdown-item" href="#!">Edit</a>
-                                        <a class="dropdown-item" href="#!">Copy link</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item text-danger" href="#!">Remove</a>
+                                        <a class="dropdown-item text-danger" href="#!">Excluir</a>
                                     </div>
                                 </div>
                             </div>
@@ -55,13 +62,15 @@
                             </p>
                         </div>
                     </div>
-                </div>`
-                }).join('')
+                </div>
+            `).join('');
 
-                sprintContainer.innerHTML = htmlCards
+                // Atualiza a coluna da sprint com os cards
+                sprintContainer.innerHTML = "";
+                sprintContainer.insertAdjacentHTML("beforeend", htmlCards);
+            } else {
+                console.warn(`Sprint ${id_sprint} não encontrada no DOM.`);
             }
-            else console.warn(`Sprint ${card.sprint_responsavel} não encontrada no DOM.`);
         }
-
     }
 }

@@ -59,6 +59,17 @@
         .kanban-items-container{
             min-height: 100px;
         }
+
+        .kanban-container {
+            position: relative;
+            min-height: 200px;
+        }
+
+        .kanban-column-footer {
+            position: relative;
+            display: block !important;
+        }
+
     </style>
 </head>
 
@@ -174,13 +185,10 @@
             }
 
             const sprints = await Sprint.carregarTodasAsSprints()
-
             for (const sprint of sprints) {
                 await Card.mostrarCards(sprint.id_sprint)
             }
 
-            draggableInit()
-            
             // Parte 2
             const cadastrarSprint = document.getElementById("cadastrarSprint");
             const excluirSprint = document.getElementById("excluirSprint")
@@ -206,6 +214,8 @@
                     await Sprint.carregarSprint(sprint);
                     document.getElementById("kanbanGridContainer").innerHTML = "";
                     await Sprint.carregarTodasAsSprints()
+                    await Card.mostrarCards(sprint.id_sprint)
+                    draggableInit();
                     Swal.fire({
                         title: "Sucesso!",
                         text: "Sprint Cadastrada.",
@@ -218,7 +228,11 @@
                         icon: "error"
                     });
                 }
+                for (const sprint of sprints) {
+                    await Card.mostrarCards(sprint.id_sprint)
+                }
             };
+            draggableInit();
 
             document.addEventListener("click", async (event) => {
                 const e = event
@@ -254,18 +268,20 @@
                 if (event.target.closest(".btn-add-card")) {
                     const coluna = event.target.closest(".kanban-column");
                     const formulario = coluna.querySelector(".add-card-form");
-                    formulario.style.display = "block";
+                    formulario.classList.remove("d-none");
+                    formulario.classList.add("d-block")
                 }
 
                 // Ocultar o formulário ao clicar em "Cancel"
                 if (event.target.dataset.btnForm === "hide") {
                     const formulario = event.target.closest(".add-card-form");
-                    formulario.style.display = "none";
+                    formulario.classList.add("d-none")
                 }
 
                 // Adicionar o card ao clicar em "Add card"
                 if (event.target.classList.contains("btCadastrarCard")) {
                     const coluna = event.target.closest(".kanban-column");
+                    const form = event.target.closest(".add-card-form");
                     const sprintDiv = event.target.closest(".kanban-container");
                     const id_sprint = sprintDiv?.getAttribute("data-id");
                     const nomeCard = coluna.querySelector(".input-nome-card").value;
@@ -287,6 +303,11 @@
 
                     const resposta = await Card.cadastrarCard(card);
                     console.log(id_sprint)
+
+                    form.querySelector(".input-nome-card").value = ""; // limpa input
+
+                    // ✅ Atualiza visualmente os cards dessa sprint
+                    await Card.mostrarCards(id_sprint);
                 }
             });
 
@@ -299,6 +320,7 @@
             configuracao.onclick = () => {
                 window.location.href = "configuracao.html"
             }
+
         }
 
         await loadPage()
