@@ -70,32 +70,22 @@
             display: block !important;
         }
 
+        #conteudo {
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+
     </style>
 </head>
 
-<body class="overflow-auto">
+<body class="overflow-auto" style="background: linear-gradient(to right, #00AEEF, #0499E3); color: white;">
 
     <!-- ===============================================-->
     <!--    Main Content-->
     <!-- ===============================================-->
     <main class="main" id="top">
-        <div class="container-fluid" data-layout="container-fluid">
-            <script>
-                var isFluid = JSON.parse(localStorage.getItem('isFluid'));
-                if (isFluid) {
-                    var container = document.querySelector('[data-layout]');
-                    container.classList.remove('container');
-                    container.classList.add('container-fluid');
-                }</script>
-            <nav class="navbar navbar-light navbar-vertical navbar-expand-xl">
-                <script>
-                    var navbarStyle = localStorage.getItem("navbarStyle");
-                    if (navbarStyle && navbarStyle !== 'transparent') {
-                        document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
-                    }</script>
-            </nav>
-            <div class="content">
-                <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand">
+            <div id="conteudo" class="content">
+                <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand" style="background: linear-gradient(to right, #00AEEF, #0499E3); color: white;">
                     <ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
                         <li id="nomeUsuario">
 
@@ -114,13 +104,13 @@
                         </li>
                     </ul>
                 </nav>
-                <div class="row gx-0 kanban-header rounded-2 px-card py-2 mt-2 mb-3">
+                <div id="nomeFabrica" class="row gx-0 kanban-header rounded-2 px-card py-2 mt-2 mb-3">
                     <div class="col d-flex align-items-center">
-                        <h5 class="mb-0">Fabrica de Software</h5>
+                        <h5 class="mb-0 fw-bold">Fabrica de Software</h5>
                         <div class="vertical-line vertical-line-400 position-relative h-100 mx-3"></div>
                     </div>
-                    <div class="col-auto d-flex align-items-center">
-                        <button class="btn btn-sm btn-falcon-default me-2 d-none d-md-block" data-bs-toggle="modal" data-bs-target="#modalSprint"><span class="fas fa-plus me-2"></span>Adicionar Sprint</button>
+                    <div class="col-auto d-flex align-items-center fw-bold">
+                        <button class="btn btn-sm btn-falcon-default me-2 d-none d-md-block fw-bold" data-bs-toggle="modal" data-bs-target="#modalSprint"><span class="fas fa-plus me-2"></span>Adicionar Sprint</button>
                     </div>
                 </div>
                 <div id="kanbanGridContainer">
@@ -178,7 +168,7 @@
             await Usuario.pegarFoto()
             const token = localStorage.getItem("token");
             const nome = localStorage.getItem("nome_usuario")
-            document.getElementById("nomeUsuario").innerHTML = `<p>Olá, ${nome}!</p>`
+            document.getElementById("nomeUsuario").innerHTML = `<p class="fw-bold">Olá, ${nome}!</p>`
             if (!token) {
                 window.location.href = "login.html";
                 return
