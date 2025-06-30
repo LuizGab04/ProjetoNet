@@ -56,7 +56,7 @@
             padding-top: 11px;
         }
 
-        .kanban-items-container{
+        .kanban-items-container {
             min-height: 100px;
         }
 
@@ -74,7 +74,6 @@
             padding-right: 20px;
             padding-left: 20px;
         }
-
     </style>
 </head>
 
@@ -84,38 +83,37 @@
     <!--    Main Content-->
     <!-- ===============================================-->
     <main class="main" id="top">
-            <div id="conteudo" class="content">
-                <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand" style="background: linear-gradient(to right, #00AEEF, #0499E3); color: white;">
-                    <ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
-                        <li id="nomeUsuario">
+        <div id="conteudo" class="content">
+            <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand" style="background: linear-gradient(to right, #00AEEF, #0499E3); color: white;">
+                <ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
+                    <li id="nomeUsuario">
 
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link pe-0" id="navbarDropdownUser" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <div id="fotoUsuario" class="avatar avatar-xl">
-                                </div>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
-                                <div class="bg-white dark__bg-1000 rounded-2 py-2">
-                                    <a id="configuracao" class="dropdown-item">Configuração</a>
-                                    <a id="deslogar" class="dropdown-item" href="#">Deslogar</a>
-                                </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link pe-0" id="navbarDropdownUser" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div id="fotoUsuario" class="avatar avatar-xl">
                             </div>
-                        </li>
-                    </ul>
-                </nav>
-                <div id="nomeFabrica" class="row gx-0 kanban-header rounded-2 px-card py-2 mt-2 mb-3">
-                    <div class="col d-flex align-items-center">
-                        <h5 class="mb-0 fw-bold">Fabrica de Software</h5>
-                        <div class="vertical-line vertical-line-400 position-relative h-100 mx-3"></div>
-                    </div>
-                    <div class="col-auto d-flex align-items-center fw-bold">
-                        <button class="btn btn-sm btn-falcon-default me-2 d-none d-md-block fw-bold" data-bs-toggle="modal" data-bs-target="#modalSprint"><span class="fas fa-plus me-2"></span>Adicionar Sprint</button>
-                    </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
+                            <div class="bg-white dark__bg-1000 rounded-2 py-2">
+                                <a id="configuracao" class="dropdown-item">Configuração</a>
+                                <a id="deslogar" class="dropdown-item" href="#">Deslogar</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <div id="nomeFabrica" class="row gx-0 kanban-header rounded-2 px-card py-2 mt-2 mb-3 border border-dark">
+                <div class="col d-flex align-items-center">
+                    <h5 class="mb-0 fw-bold">Fabrica de Software</h5>
+                    <div class="vertical-line vertical-line-400 position-relative h-100 mx-3"></div>
                 </div>
-                <div id="kanbanGridContainer">
+                <div class="col-auto d-flex align-items-center fw-bold">
+                    <button class="btn btn-sm btn btn-primary  me-2 d-none d-md-block fw-bold" data-bs-toggle="modal" data-bs-target="#modalSprint"><span class="fas fa-plus me-2"></span>Adicionar Sprint</button>
+                </div>
+            </div>
+            <div id="kanbanGridContainer">
 
-                </div>
             </div>
         </div>
 
@@ -124,17 +122,17 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro da Sprint</h1>
+                        <h1 class="modal-title  fw-bold fs-5" id="exampleModalLabel">Cadastro da Sprint</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div>
-                            <label for="nomeSprint" class="form-label">Nome da Sprint</label>
+                            <label for="nomeSprint" class="form-label  fw-bold" style="color: black">Nome da Sprint</label>
                             <input type="text" id="nomeSprint" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="cadastrarSprint" class="btn btn-primary">Adicionar Sprint</button>
+                        <button id="cadastrarSprint" class="btn btn-sm btn btn-primary me-2 d-none d-md-block fw-bold" data-bs-toggle="modal" data-bs-target="#modalSprint"><span class="fas fa-plus me-2"></span>Adicionar Sprint</button>
                     </div>
                 </div>
             </div>
@@ -156,7 +154,7 @@
     <script src="../vendors/lodash/lodash.min.js"></script>
     <script src="../vendors/list.js/list.min.js"></script>
     <script src="../assets/js/theme.js"></script>
-   
+
     <script type="module">
         import { Usuario } from "../Modelos/ModeloUsuario.js"
         import { Sprint } from "../Modelos/ModeloSprint.js"
