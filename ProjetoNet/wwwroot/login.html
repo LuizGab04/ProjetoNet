@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <meta charset="utf-8" />
+    <title>Fabrica de Software | Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #00AEEF, #001D4C);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #body-meio {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Aqui sim usa altura */
+        }
+
+        #form-login {
+            background: #00AEEF;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 505px;
+        }
+
+            #form-login h1 {
+                margin-bottom: 20px;
+                color: white;
+                font-size: 1.5rem;
+            }
+
+        .form-label {
+            color: white;
+            font-weight: bold;
+            text-align: left;
+            display: block;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        #form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #botoes-login {
+            margin-top: 20px;
+        }
+
+        #btLogin {
+            background: linear-gradient(to right, #0059A8, #002D72);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+            #btLogin:hover {
+                background: linear-gradient(to right, #003F8A, #001D4C);
+            }
+
+        #btCadastrar {
+            font-size: 0.9rem;
+            color: white;
+            text-decoration: underline;
+        }
+
+        #btEnviarCadastro {
+            background: linear-gradient(to right, #0059A8, #002D72);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        #btVoltar {
+            font-size: 0.9rem;
+            color: white;
+            text-decoration: underline;
+        }
+
+        .preencha {
+            border: 2px solid red !important;
+            background-color: #ffe6e6;
+        }
+
+        kanban-column-header {
+            align-items: center !important;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div id="body-meio">
+            <div id="form-login">
+                <img src="assets/img/Logo_Fabrica.png" />
+                <div>
+                    <div>
+                        <form id="form-container" class="pt-4">
+                            <div class="mb-3">
+                                <label for="loginEmail" class="form-label">Login</label>
+                                <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Senha</label>
+                                <input type="password" id="loginSenha" class="form-control">
+                            </div>
+                        </form>
+                    </div>
+                    <div id="botoes-login">
+                        <button type="submit" id="btLogin" class="btn btn-primary w-100">ENTRAR</button>
+                        <p class="mt-3 text-white">Não tenho cadastro,<button id="btCadastrar" class="btn btn-link">Criar um!</button></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="scripts/login.js"></script>
+    <script type="module">
+        import { Usuario } from "../Modelos/ModeloUsuario.js"
+
+        function addStyle() {
+            const sheet = new CSSStyleSheet();
+            sheet.insertRule(`#botoes-login { display: none; }`, 0);
+            document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+        }
+
+        btCadastrar.onclick = () => {
+            document.getElementById("botoes-login").classList.add(addStyle())
+            document.getElementById("form-container").innerHTML = `
+                                                                <form>
+                                                                    <div class="mb-3">
+                                                                        <label for="inputNome" class="form-label">Nome</label>
+                                                                        <input type="text" class="form-control" id="inputNome">
+                                                                    </div>
+                                                                     <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">E-mail</label>
+                                                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                                                     </div>
+                                                                     <div class="mb-3">
+                                                                        <label for="exampleInputPassword1" class="form-label">Senha</label>
+                                                                        <input type="password" class="form-control" id="exampleInputPassword1">
+                                                                     </div>
+                                                                     <div class="mb-3">
+                                                                         <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
+                                                                         <input type="password" class="form-control" id="confirmarSenha">
+                                                                     </div>
+                                                                </form>
+                                                                  <div id="form-botoes">
+                                                                       <button type="submit" id="btEnviarCadastro" class="btn btn-primary  w-100">Cadastrar</button>
+                                                                       <p class="mt-3 text-white">Já tenho cadastro,<button id="btVoltar" class="btn btn-link">Ir para Login!</button></p>
+                                                                    </ul>
+                                                                  </div>
+                                                                    `;
+
+            document.getElementById("btEnviarCadastro").addEventListener("click", async function (event) {
+                event.preventDefault(); // Evita o recarregamento da página
+
+                // Captura os valores do formulário
+                const nome = document.getElementById("inputNome").value;
+                const email = document.getElementById("exampleInputEmail1").value;
+                const senha = document.getElementById("exampleInputPassword1").value;
+                const confirmarSenha = document.getElementById("confirmarSenha").value
+
+
+
+                // Validação simples
+                if (!nome || !email || !senha || !confirmarSenha) {
+                    if (!nome) document.getElementById("inputNome").classList.add("preencha");
+                    if (!email) document.getElementById("exampleInputEmail1").classList.add("preencha");
+                    if (!senha) document.getElementById("exampleInputPassword1").classList.add("preencha");
+                    if (!confirmarSenha) document.getElementById("confirmarSenha").classList.add("preencha");
+
+                    Swal.fire({
+                        title: "Preencha os campos vazios",
+                        icon: "warning"
+                    });
+                    return;
+
+                    document.querySelectorAll("input").forEach(input => {
+                        input.addEventListener("input", function () {
+                            this.classList.remove("preencha");
+                        });
+                    });
+                }
+
+                if (senha != confirmarSenha) {
+                    Swal.fire({
+                        title: "Senhas não são iguais",
+                        icon: "warning"
+                    });
+                    return;
+                }
+
+                const usuario = {
+                    nome_usuario: nome,
+                    email_usuario: email,
+                    senha_usuario: senha
+                };
+
+                // Chama o método de cadastro na API
+                const resposta = await Usuario.cadastrarUsuario(usuario)
+                if (!resposta.mensagem) {
+                    Swal.fire({
+                        title: "Cadastrado com Sucesso!",
+                        icon: "success",
+                        draggable: true
+                    });
+                    setTimeout(() => {
+                        window.location.href = "login.html"
+                    }, 3000)
+                } else {
+                    Swal.fire({
+                        title: "Erro!",
+                        text: "E-mail já cadastrado!",
+                        icon: "error"
+                    });
+                }
+            });
+
+            document.getElementById("btVoltar").addEventListener("click", () => {
+                location.reload();
+            });
+
+        };
+
+        btLogin.onclick = async () => {
+            const email = document.getElementById("loginEmail").value
+            const senha = document.getElementById("loginSenha").value
+
+            const usuario = {
+                email_usuario: email,
+                senha_usuario: senha
+            }
+
+            const resposta = await Usuario.loginUsuario(usuario)
+
+            if (!resposta.mensagem) {
+                localStorage.setItem("token", resposta.token)
+                localStorage.setItem("nome_usuario", resposta.usuario.nome_usuario)
+                localStorage.setItem("foto_perfil", resposta.usuario.foto_perfil)
+
+                Swal.fire({
+                    title: "Login realizado com sucesso!",
+                    icon: "success"
+                }).then(() => {
+                    window.location.href = "kanban.html"
+                })
+            } else {
+                Swal.fire({
+                    title: "Erro!",
+                    text: "Credenciais inválidas.",
+                    icon: "error"
+                });
+            }
+        }
+    </script>
+</body>
+</html>
