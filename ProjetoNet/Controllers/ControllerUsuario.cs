@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProjetoNet.Model;
-using ProjetoNet.Repositories;
 using ProjetoNet.Repositories.Interfaces;
 using ProjetoNet.Services;
 using System.Security.Claims;
@@ -97,12 +95,6 @@ namespace ProjetoNet.Controllers
             {
                 return Ok(new { fotoBytes });
             }
-        }
-
-        [HttpGet("teste-api")]
-        public IActionResult TesteApi()
-        {
-            return Ok("API funcionando!");
         }
     }
 }

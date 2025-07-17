@@ -163,14 +163,8 @@
 
         const loadPage = async () => {
             // Parte 1
-            await Usuario.pegarFoto()
-            const token = localStorage.getItem("token");
-            const nome = localStorage.getItem("nome_usuario")
-            document.getElementById("nomeUsuario").innerHTML = `<p class="fw-bold">Olá, ${nome}!</p>`
-            if (!token) {
-                window.location.href = "login.html";
-                return
-            }
+            await informacoesUsuario()
+            
 
             const sprints = await Sprint.carregarTodasAsSprints()
             for (const sprint of sprints) {
@@ -352,7 +346,6 @@
             configuracao.onclick = () => {
                 window.location.href = "configuracao.html"
             }
-
         }
 
         await loadPage()

@@ -47,7 +47,7 @@ app.Use(async (context, next) =>
 {
     if (context.Request.Path == "/")
     {
-        context.Response.Redirect("/login.html");
+        context.Response.Redirect("/kanban.html");
         return;
     }
     await next();
