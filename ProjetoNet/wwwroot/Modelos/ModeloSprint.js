@@ -1,7 +1,8 @@
 ﻿export class Sprint {
     nome_sprint
     id_sprint
-
+    data_inicio
+    data_fim
 
     static appUrl = "http://localhost:5176/api/sprint"
 

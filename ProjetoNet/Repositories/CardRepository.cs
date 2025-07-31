@@ -32,7 +32,7 @@ namespace ProjetoNet.Repositories
             using var conexao = _dbConexaoFactory.CreateConnection();
             string sql = $"SELECT * FROM Card WHERE sprint_responsavel = {id_sprint};";
 
-            return await conexao.QueryAsync<Card>(sql);
+            return await conexao.QueryAsync<Card>(sql, id_sprint);
         }
     }
 }

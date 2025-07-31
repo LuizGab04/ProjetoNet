@@ -121,22 +121,39 @@
         <div class="modal fade" id="modalSprint" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
+
                     <div class="modal-header">
-                        <h1 class="modal-title  fw-bold fs-5" id="exampleModalLabel">Cadastro da Sprint</h1>
+                        <h1 class="modal-title fw-bold fs-5" id="exampleModalLabel">Cadastro da Sprint</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+
                     <div class="modal-body">
-                        <div>
-                            <label for="nomeSprint" class="form-label  fw-bold" style="color: black">Nome da Sprint</label>
+                        <div class="mb-3">
+                            <label for="nomeSprint" class="form-label fw-bold" style="color: black;">Nome da Sprint</label>
                             <input type="text" id="nomeSprint" class="form-control">
                         </div>
+
+                        <div class="mb-3">
+                            <label for="dataInicio" class="form-label fw-bold" style="color: black;">Data de Início</label>
+                            <input type="date" id="dataInicio" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="dataFim" class="form-label fw-bold" style="color: black;">Data Final</label>
+                            <input type="date" id="dataFim" class="form-control">
+                        </div>
                     </div>
+
                     <div class="modal-footer">
-                        <button id="cadastrarSprint" class="btn btn-sm btn btn-primary me-2 d-none d-md-block fw-bold" data-bs-toggle="modal" data-bs-target="#modalSprint"><span class="fas fa-plus me-2"></span>Adicionar Sprint</button>
+                        <button id="cadastrarSprint" class="btn btn-sm btn-primary me-2 d-none d-md-block fw-bold" data-bs-toggle="modal" data-bs-target="#modalSprint">
+                            <span class="fas fa-plus me-2"></span>Adicionar Sprint  
+                        </button>
                     </div>
+
                 </div>
             </div>
         </div>
+
     </main>
     <!-- ===============================================-->
     <!--    End of Main Content-->
@@ -154,22 +171,21 @@
     <script src="../vendors/lodash/lodash.min.js"></script>
     <script src="../vendors/list.js/list.min.js"></script>
     <script src="../assets/js/theme.js"></script>
+    <script type="module" src="../scripts/funcoesGerais.js"></script>
 
     <script type="module">
         import { Usuario } from "../Modelos/ModeloUsuario.js"
         import { Sprint } from "../Modelos/ModeloSprint.js"
-        import { Card } from "../Modelos/ModeloCard.js"
-
+        import { Card } from "../Modelos/ModeloCard.js" 
+        import { funcoesGerais } from "../scripts/funcoesGerais.js"  
 
         const loadPage = async () => {
             // Parte 1
-            await informacoesUsuario()
-            
+            await funcoesGerais.informacoesUsuario()
+            await funcoesGerais.validacaoToken()
+            const sprints = await Sprint.carregarTodasAsSprints()   
 
-            const sprints = await Sprint.carregarTodasAsSprints()
-            for (const sprint of sprints) {
-                await Card.mostrarCards(sprint.id_sprint)
-            }
+            await Promise.all(sprints.map(s => Card.mostrarCards(s.id_sprint)))
 
             // Parte 2
             const cadastrarSprint = document.getElementById("cadastrarSprint");
@@ -177,6 +193,10 @@
 
             cadastrarSprint.onclick = async () => {
                 const nome = document.getElementById("nomeSprint").value
+                const dataInicioValor = document.getElementById("dataInicio").value;
+                const dataFimValor = document.getElementById("dataFim").value;
+                const dataInicio = new Date(dataInicioValor);
+                const dataFim = new Date(dataFimValor);
 
                 if (!nome) {
                     Swal.fire({
@@ -187,16 +207,14 @@
                 }
 
                 const sprint = {
-                    nome_sprint: nome
+                    nome_sprint: nome,
+                    data_inicio: dataInicio.toISOString().split("T")[0],
+                    data_final: dataFim.toISOString().split("T")[0]
                 };
 
                 const resposta = await Sprint.cadastrarSprint(sprint);
 
                 if (!resposta) {
-                    await Sprint.carregarSprint(sprint);
-                    document.getElementById("kanbanGridContainer").innerHTML = "";
-                    await Sprint.carregarTodasAsSprints()
-                    await Card.mostrarCards(sprint.id_sprint)
                     draggableInit();
                     Swal.fire({
                         title: "Sucesso!",
@@ -210,9 +228,10 @@
                         icon: "error"
                     });
                 }
-                for (const sprint of sprints) {
-                    await Card.mostrarCards(sprint.id_sprint)
-                }
+                await Sprint.carregarSprint(sprint);
+                document.getElementById("kanbanGridContainer").innerHTML = "";
+                await Sprint.carregarTodasAsSprints()
+                await Promise.all(sprints.map(s => Card.mostrarCards(s.id_sprint)))
             };
             draggableInit();
 
@@ -281,10 +300,7 @@
                         nome_card: nomeCard
                     };
 
-                    console.log(card)
-
                     const resposta = await Card.cadastrarCard(card);
-                    console.log(id_sprint)
 
                     form.querySelector(".input-nome-card").value = ""; // limpa input
 
@@ -321,10 +337,6 @@
                     const nomeCardElement = wrapper ? wrapper.querySelector('.nome-card') : null;
                     const nomeCard = nomeCardElement ? nomeCardElement.textContent.trim() : null;
 
-
-
-                    console.log("Nome do card:", nomeCard);
-
                     const cardAtualizado = {
                         nome_card: nomeCard,
                         id_card: id_card,
@@ -332,7 +344,6 @@
                         coluna_responsavel: novaColuna
                     };
 
-                    console.log("Card atualizado via Sortable:", cardAtualizado);
                     await Card.atualizarCard(cardAtualizado);
                 });
             }

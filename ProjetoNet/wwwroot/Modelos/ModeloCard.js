@@ -27,7 +27,6 @@
             body: JSON.stringify(card)
         });
 
-        console.log(resposta)
         return;
         
     }
@@ -44,7 +43,6 @@
         const cards = await resposta.json();
 
         if (!cards || cards.length === 0) {
-            console.log(`Não há cards para a sprint ${id_sprint}`);
            
             for (let cont = 0; cont < 5; cont++) {
                 const sprintContainer = document.querySelector(
@@ -55,7 +53,6 @@
             return;
         }
 
-        
         for (let cont = 0; cont < 5; cont++) {
             const sprintContainer = document.querySelector(
                 `#sprint-${id_sprint} .kanban-column[column-index="${cont}"] .kanban-items-container`

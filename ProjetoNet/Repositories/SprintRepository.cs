@@ -13,11 +13,8 @@ namespace ProjetoNet.Repositories
         public async Task<int> AdicionarSprint(Sprint sprint)
         {
             using var conexao = _dbConexaoFactory.CreateConnection();
-            string sql = $"INSERT INTO Sprint(nome_sprint) VALUES (@nome_sprint); ";
-            return await conexao.ExecuteScalarAsync<int>(sql, new
-            {
-                sprint.nome_sprint
-            });
+            string sql = $"INSERT INTO Sprint(nome_sprint, data_inicio, data_fim) VALUES (@nome_sprint, @data_inicio, @data_fim); ";
+            return await conexao.ExecuteScalarAsync<int>(sql, sprint);
         }
 
         public async Task<IEnumerable<Sprint>> MostrarSprints()

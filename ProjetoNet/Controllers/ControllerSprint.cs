@@ -16,7 +16,7 @@ namespace ProjetoNet.Controllers
         {
             try
             {
-                return Ok(await _sprintRepository.AdicionarSprint(sprint));
+                 return Ok(await _sprintRepository.AdicionarSprint(sprint));
             }
             catch (Exception ex)
             {
